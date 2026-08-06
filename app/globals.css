@@ -92,6 +92,28 @@
     @apply text-ember-600 underline underline-offset-2 hover:text-ember-700;
   }
 
+  .prose-rtl img {
+    @apply rounded-[18px] my-8 w-full h-auto border border-line;
+  }
+
+  .prose-rtl blockquote {
+    @apply border-r-4 border-champagne-400 bg-veil rounded-[12px] pr-5 pl-4 py-4 my-8;
+  }
+
+  .prose-rtl blockquote p {
+    @apply text-ink font-medium mb-0;
+  }
+
+  .prose-rtl hr {
+    @apply border-0 h-px my-10;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--champagne-400),
+      transparent
+    );
+  }
+
   /* Inverted prose for dark scenes */
   .prose-invert-warm h2 {
     @apply text-2xl sm:text-3xl text-white mt-10 mb-3 leading-tight;
@@ -339,20 +361,9 @@
     -webkit-text-stroke: 1px rgba(247, 232, 207, 0.35);
   }
 
-  /* Infinite marquee — brand ticker */
-  .marquee {
-    overflow: hidden;
-    display: flex;
-  }
-
-  .marquee-track {
-    display: flex;
-    align-items: center;
-    gap: 3.5rem;
-    padding-inline-start: 3.5rem;
-    width: max-content;
-    flex-shrink: 0;
-    animation: marquee 36s linear infinite;
+  /* Panel rise — short entrance when interactive content swaps in */
+  .panel-rise {
+    animation: panel-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   /* Cursor spotlight — JS feeds --mx/--my; warm glow trails the pointer */
@@ -507,9 +518,14 @@
   }
 }
 
-@keyframes marquee {
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
   to {
-    transform: translateX(-100%);
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -595,7 +611,9 @@
     transform: none !important;
     filter: none !important;
   }
-  .marquee-track,
+  .panel-rise {
+    animation: none !important;
+  }
   .starfield::before,
   .scroll-cue::after,
   .meteor,

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { getPage, getServices, getTestimonials, getTeam } from "@/lib/content";
 import { whatsappLink } from "@/lib/whatsapp";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
@@ -14,6 +14,7 @@ import Spotlight from "@/components/Spotlight";
 import Parallax from "@/components/Parallax";
 import Magnetic from "@/components/Magnetic";
 import Tilt from "@/components/Tilt";
+import DragScroll from "@/components/DragScroll";
 import type { FAQ } from "@/lib/types";
 
 // One continuous story: the page descends into night and climbs to sunrise.
@@ -34,7 +35,7 @@ export default async function HomePage() {
     : { content: null };
 
   const wa = whatsappLink();
-  const headline = fm.heroHeadline ?? "מכיבוי שריפות — לסיסטם שמנהל את החיים";
+  const headline = fm.heroHeadline ?? "מכיבוי שריפות, לסיסטם שמנהל את החיים";
   const headlineWords = headline.split(" ");
 
   return (
@@ -62,13 +63,8 @@ export default async function HomePage() {
             style={{ right: "78%", bottom: "3%", animationDelay: "9s", animationDuration: "14s" }}
           />
         </div>
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[94svh] flex flex-col justify-center py-24">
-          {fm.heroKicker && (
-            <p className="eyebrow eyebrow-light hero-word [animation-delay:80ms]">
-              {fm.heroKicker}
-            </p>
-          )}
-          <h1 className="text-[2.75rem] sm:text-7xl lg:text-[5.5rem] text-white leading-[1.08] mb-8 max-w-4xl">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[94svh] flex flex-col items-center justify-center text-center py-24">
+          <h1 className="text-[2.75rem] sm:text-7xl lg:text-[5.5rem] text-white leading-[1.08] mb-8">
             {headlineWords.map((w, i) => (
               // NBSP inside the inline-block span — a plain trailing space
               // would be collapsed and the words would run together.
@@ -82,13 +78,18 @@ export default async function HomePage() {
             ))}
           </h1>
           <p
-            className="text-lg sm:text-2xl text-white/70 leading-relaxed mb-11 max-w-xl hero-word"
+            className="text-lg sm:text-2xl text-white/70 leading-relaxed mb-11 max-w-2xl hero-word"
             style={{ animationDelay: `${300 + headlineWords.length * 90}ms` }}
           >
-            {fm.heroSubhead}
+            {fm.heroSubhead?.split("\n").map((line, i, all) => (
+              <span key={i}>
+                {line}
+                {i < all.length - 1 && <br />}
+              </span>
+            ))}
           </p>
           <div
-            className="flex flex-col sm:flex-row items-start gap-3 hero-word"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 hero-word"
             style={{ animationDelay: `${420 + headlineWords.length * 90}ms` }}
           >
             <Magnetic>
@@ -101,30 +102,6 @@ export default async function HomePage() {
               </Link>
             </Magnetic>
           </div>
-
-          {/* Trust line on the hero floor */}
-          <ul
-            className="mt-16 pt-7 border-t border-white/10 flex flex-wrap gap-x-10 gap-y-3 hero-word"
-            style={{ animationDelay: `${540 + headlineWords.length * 90}ms` }}
-          >
-            {[
-              "בלי ניגוד עניינים — לא מוכרים כלום",
-              "מערכת, לא טיפים",
-              "פרונטלי ברעננה או אונליין",
-            ].map((t) => (
-              <li
-                key={t}
-                className="flex items-center gap-2 text-white/60 !text-base"
-              >
-                <Check
-                  className="w-4 h-4 text-champagne-400"
-                  strokeWidth={1.5}
-                  aria-hidden="true"
-                />
-                {t}
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div
@@ -134,31 +111,6 @@ export default async function HomePage() {
           <span className="scroll-cue" />
         </div>
       </section>
-
-      {/* ═══ Ticker — embers drifting across the night ═══ */}
-      <div
-        className="border-y border-white/[.06] py-7 marquee select-none"
-        style={{ backgroundColor: "#1A1122" }}
-        dir="ltr"
-        aria-hidden="true"
-      >
-        {[0, 1].map((copy) => (
-          <div key={copy} className="marquee-track">
-            {services.map((s, i) => (
-              <span key={s.slug} className="flex items-center gap-14" dir="rtl">
-                <span
-                  className={`font-display text-3xl sm:text-4xl whitespace-nowrap ${
-                    i % 2 ? "text-outline-light" : "text-champagne-metal"
-                  }`}
-                >
-                  {s.title}
-                </span>
-                <span className="text-ember-500 text-2xl">✦</span>
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
 
       {/* ═══ 02:00 — דמדומים. The reason it never worked alone. ═══ */}
       {home && (
@@ -207,13 +159,10 @@ export default async function HomePage() {
                     {fm.proofTitle ?? "משפחות מספרות"}
                   </h2>
                 </div>
-                <p className="text-white/70 text-sm mb-2" aria-hidden="true">
-                  ← גררו לצפייה
-                </p>
               </ScrollReveal>
             </div>
-            {/* Filmstrip — horizontal snap scroll, bleeding off-screen */}
-            <div className="overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {/* Filmstrip — horizontal snap scroll, bleeding off-screen, drag with mouse or touch */}
+            <DragScroll className="overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <div className="flex gap-5 px-4 sm:px-6 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))] pb-4 w-max">
                 {testimonials.map((t) => (
                   <div
@@ -228,7 +177,7 @@ export default async function HomePage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </DragScroll>
           </div>
         </section>
       )}

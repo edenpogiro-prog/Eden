@@ -2,33 +2,36 @@
 // Edit here to change global facts in one place.
 
 export const SITE = {
-  name: "המטריה המשפחתית",
-  tagline: "כל המשפחה. תחת מטריה אחת.",
+  name: "המטרייה המשפחתית",
+  tagline: "כל המשפחה. תחת מטרייה אחת.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.mitriafamily.co.il",
   locale: "he_IL",
-  email: "sivanarazi2@gmail.com",
-  spotifyShowUrl: "", // TODO: fill with the Spotify show URL for the podcast hub
-  instagramUrl: "", // TODO: fill Instagram profile URL
+  email: "sivaneden@mitriafamily.co.il",
+  spotifyShowUrl:
+    "https://open.spotify.com/show/033x9y6sbLsOBt47q2ojAc?si=_us_SL2YS1ycHA9Aije6Mg&nd=1&dlsi=19ca76fa954f4d1b",
+  instagramUrl: "https://www.instagram.com/sivanarazipogiro?igsh=enhhcHB0eG1vdHRz",
+  sivanCommunityWhatsappUrl: "https://chat.whatsapp.com/IjroivUQkO0KSsSLqydYoQ",
 } as const;
 
-// Coaches. WhatsApp routing (Issue 3 mapping — confirmed in CEO review):
-//   finance / blueprint -> Eden (052-5205281)
-//   couples / parenting -> Sivan (052-8559050)
-// Change a number here and every routed CTA updates.
+// Coaches. WhatsApp routing:
+//   couples / parenting / blueprint / personal-development / future-leaders -> Sivan (052-5205281)
+//   everything else -> Eden (052-8559050)
+// Change a number here and every routed CTA updates. Both coaches share one
+// inbox (sivaneden@mitriafamily.co.il) rather than personal addresses.
 export const COACHES = {
   eden: {
     slug: "eden",
     name: "עדן פוגירו",
     role: "יועץ כלכלי למשפחה ומומחה להשקעות נדל\"ן בארה\"ב",
-    whatsapp: "972525205281", // 052-5205281
-    email: "edenpogiro@gmail.com",
+    whatsapp: "972528559050", // 052-8559050
+    email: "sivaneden@mitriafamily.co.il",
   },
   sivan: {
     slug: "sivan",
     name: "סיון ארזי פוגירו",
     role: "מנטורית רב-תחומית לזוגיות, הורות וניהול חיים",
-    whatsapp: "972528559050", // 052-8559050
-    email: "sivanarazi2@gmail.com",
+    whatsapp: "972525205281", // 052-5205281
+    email: "sivaneden@mitriafamily.co.il",
   },
 } as const;
 
@@ -41,6 +44,8 @@ export const NAV = [
   { href: "/", label: "בית" },
   { href: "/services", label: "שירותים" },
   { href: "/our-story", label: "הסיפור שלנו" },
+  { href: "/blog", label: "בלוג" },
+  { href: "/podcast", label: "הפודקאסט" },
   { href: "/testimonials", label: "המלצות" },
   { href: "/contact", label: "צור קשר" },
 ] as const;

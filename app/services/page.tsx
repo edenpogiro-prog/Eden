@@ -10,7 +10,7 @@ import { whatsappLink, serviceMessage } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "השירותים שלנו",
   description:
-    "ליווי זוגי, הדרכת הורים, ייעוץ כלכלי למשפחה והשרטוט — כל מה שהמשפחה צריכה תחת קורת גג אחת.",
+    "ליווי זוגי, הדרכת הורים, ייעוץ כלכלי למשפחה והבלופרינט, כל מה שהמשפחה צריכה תחת קורת גג אחת.",
   alternates: { canonical: "/services" },
 };
 
@@ -23,10 +23,10 @@ export default function ServicesPage() {
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-14">
           <p className="eyebrow eyebrow-light">שירותים</p>
           <h1 className="text-4xl sm:text-6xl text-white mb-5 leading-[1.15] max-w-2xl">
-            כל המשפחה. תחת מטריה אחת.
+            כל המשפחה. תחת מטרייה אחת.
           </h1>
           <p className="text-lg text-white/70 leading-relaxed max-w-xl">
-            בחרו את התחום שמדבר אליכם — או פשוט דברו איתנו ונעזור לכם למצוא את
+            בחרו את התחום שמדבר אליכם, או פשוט דברו איתנו ונעזור לכם למצוא את
             נקודת ההתחלה הנכונה.
           </p>
 
@@ -165,7 +165,7 @@ export default function ServicesPage() {
                 לא בטוחים מאיפה להתחיל?
               </h2>
               <p className="text-white/70 mb-9 leading-relaxed max-w-lg mx-auto">
-                שלחו לנו הודעה — נבין יחד מה מתאים לכם, בלי התחייבות ובלי לחץ.
+                שלחו לנו הודעה, נבין יחד מה מתאים לכם, בלי התחייבות ובלי לחץ.
               </p>
               <div className="flex justify-center">
                 <WhatsAppCTA href={whatsappLink()} label="דברו איתנו בוואטסאפ" />

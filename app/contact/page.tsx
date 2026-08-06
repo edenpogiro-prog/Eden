@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MessageCircle } from "lucide-react";
-import { COACHES } from "@/lib/site";
+import { Instagram, Phone, Mail, MessageCircle, Podcast } from "lucide-react";
+import { COACHES, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "צור קשר",
   description:
-    "דברו איתנו בוואטסאפ, בטלפון או במייל — או השאירו פנייה ונחזור אליכם.",
+    "דברו איתנו בוואטסאפ, בטלפון או במייל, או השאירו פנייה ונחזור אליכם.",
   alternates: { canonical: "/contact" },
 };
 
@@ -21,7 +21,7 @@ export default function ContactPage() {
             בואו נדבר
           </h1>
           <p className="text-lg text-white/70 leading-relaxed max-w-xl">
-            הכי פשוט — הודעת וואטסאפ. אבל אפשר גם למלא את הטופס ונחזור אליכם.
+            הכי פשוט, הודעת וואטסאפ. אבל אפשר גם למלא את הטופס ונחזור אליכם.
           </p>
         </div>
       </header>
@@ -66,6 +66,28 @@ export default function ContactPage() {
                   <Mail className="w-4 h-4" strokeWidth={1.5} />
                   {c.email}
                 </a>
+                {c.slug === "sivan" && (
+                  <>
+                    <a
+                      href={SITE.spotifyShowUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"
+                    >
+                      <Podcast className="w-4 h-4" strokeWidth={1.5} />
+                      הפודקאסט של סיון בספוטיפיי
+                    </a>
+                    <a
+                      href={SITE.instagramUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"
+                    >
+                      <Instagram className="w-4 h-4" strokeWidth={1.5} />
+                      אינסטגרם
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           ))}

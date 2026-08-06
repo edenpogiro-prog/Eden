@@ -2,26 +2,23 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 
-// Geometric mark: shelter arc over ascending bars (growth under cover).
-function LogoMark({ dark = false }: { dark?: boolean }) {
+function LogoMark() {
   return (
-    <svg viewBox="0 0 40 40" className="w-9 h-9" aria-hidden="true">
-      <path
-        d="M6 21 A14 14 0 0 1 34 21"
-        fill="none"
-        stroke="var(--champagne-400)"
-        strokeWidth="3.5"
-        strokeLinecap="round"
+    <span className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0">
+      <Image
+        src="/images/logo-black.jpg"
+        alt=""
+        fill
+        sizes="36px"
+        className="object-cover"
       />
-      <rect x="11" y="25" width="4" height="9" rx="1" fill="var(--ember-300)" />
-      <rect x="18" y="22" width="4" height="12" rx="1" fill="var(--ember-500)" />
-      <rect x="25" y="19" width="4" height="15" rx="1" fill={dark ? "#FFFFFF" : "var(--abyss-900)"} />
-    </svg>
+    </span>
   );
 }
 
@@ -36,7 +33,7 @@ export default function Header() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Logo (right in RTL) */}
           <Link href="/" className="flex items-center gap-2.5 flex-shrink-0">
-            <LogoMark dark />
+            <LogoMark />
             <span className="font-display text-white leading-none text-lg">
               {SITE.name}
             </span>
@@ -76,7 +73,7 @@ export default function Header() {
         <div className="fixed inset-0 z-[60] bg-abyss-950 md:hidden flex flex-col aurora">
           <div className="relative h-16 px-4 flex items-center justify-between border-b border-white/10">
             <span className="flex items-center gap-2.5">
-              <LogoMark dark />
+              <LogoMark />
               <span className="font-display text-white text-lg">{SITE.name}</span>
             </span>
             <button

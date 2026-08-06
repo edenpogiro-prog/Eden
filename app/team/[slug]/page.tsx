@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronLeft, Check } from "lucide-react";
+import { ChevronLeft, Check, Instagram, Podcast } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getTeam, getTeamMemberBySlug } from "@/lib/content";
-import { COACHES } from "@/lib/site";
+import { COACHES, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import { personLd, breadcrumbLd } from "@/lib/seo";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!member) return {};
   return {
     title: member.name,
-    description: `${member.name} — ${member.role}. חלק מהמטריה המשפחתית.`,
+    description: `${member.name}, ${member.role}. חלק מהמטרייה המשפחתית.`,
     alternates: { canonical: `/team/${slug}` },
   };
 }
@@ -153,7 +153,31 @@ export default async function TeamPage({ params }: PageProps) {
         <p className="text-ink font-semibold mb-5">
           רוצים לדבר ישירות עם {member.name.split(" ")[0]}?
         </p>
-        <WhatsAppCTA href={wa} label={`וואטסאפ עם ${member.name.split(" ")[0]}`} />
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <WhatsAppCTA href={wa} label={`וואטסאפ עם ${member.name.split(" ")[0]}`} />
+          {member.slug === "sivan" && (
+            <>
+              <a
+                href={SITE.spotifyShowUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline"
+              >
+                <Podcast className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                הפודקאסט שלי בספוטיפיי
+              </a>
+              <a
+                href={SITE.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-outline"
+              >
+                <Instagram className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                אינסטגרם
+              </a>
+            </>
+          )}
+        </div>
       </div>
       </div>
     </article>

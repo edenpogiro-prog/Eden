@@ -63,8 +63,8 @@ export default function ContactForm() {
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <input type="hidden" name="access_key" value={ACCESS_KEY} />
-      <input type="hidden" name="subject" value="פנייה חדשה מאתר המטריה המשפחתית" />
-      <input type="hidden" name="from_name" value="אתר המטריה המשפחתית" />
+      <input type="hidden" name="subject" value="פנייה חדשה מאתר המטרייה המשפחתית" />
+      <input type="hidden" name="from_name" value="אתר המטרייה המשפחתית" />
       {/* honeypot */}
       <input
         type="checkbox"
@@ -111,11 +111,17 @@ export default function ContactForm() {
             name="topic"
             className="w-full rounded-[10px] border border-line bg-white px-4 py-3 focus:border-ember-500 outline-none transition-colors duration-150"
           >
+            <option>ייעוץ משפחתי והדרכת הורים</option>
             <option>ייעוץ זוגי</option>
-            <option>הדרכת הורים</option>
-            <option>ליווי כלכלי</option>
-            <option>השרטוט</option>
-            <option>לא בטוח/ה — עזרו לי לבחור</option>
+            <option>ייעוץ בכלכלת המשפחה</option>
+            <option>הבלופרינט</option>
+            <option>מסלול משולב: כלכלה ומשפחה</option>
+            <option>מסלול משולב: זוגיות וכלכלה</option>
+            <option>קורסים דיגיטליים</option>
+            <option>התפתחות אישית</option>
+            <option>הרצאות וסדנאות</option>
+            <option>המנהיגים של המחר (ילדים ומתבגרים)</option>
+            <option>לא בטוח/ה, עזרו לי לבחור</option>
           </select>
         </div>
       </div>

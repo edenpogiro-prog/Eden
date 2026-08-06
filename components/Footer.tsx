@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { Instagram, Mail, Phone, Podcast } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
 
 export default function Footer() {
@@ -13,7 +13,7 @@ export default function Footer() {
         <div>
           <h2 className="font-display text-white text-2xl mb-3">{SITE.name}</h2>
           <p className="text-white/60 leading-relaxed max-w-xs">
-            {SITE.tagline} ליווי זוגי, הורי וכלכלי למשפחה — תחת קורת גג אחת.
+            {SITE.tagline} ליווי זוגי, הורי וכלכלי למשפחה, תחת קורת גג אחת.
           </p>
         </div>
 
@@ -42,11 +42,11 @@ export default function Footer() {
           <ul className="space-y-2.5 text-white/60">
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-              <span dir="ltr">052-5205281</span> · עדן
+              <span dir="ltr">052-8559050</span> · עדן
             </li>
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-              <span dir="ltr">052-8559050</span> · סיון
+              <span dir="ltr">052-5205281</span> · סיון
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
@@ -55,6 +55,28 @@ export default function Footer() {
                 className="hover:text-white transition-colors duration-150"
               >
                 {SITE.email}
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <Podcast className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              <a
+                href={SITE.spotifyShowUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors duration-150"
+              >
+הפודקאסט של סיון בספוטיפיי
+              </a>
+            </li>
+            <li className="flex items-center gap-2">
+              <Instagram className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              <a
+                href={SITE.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors duration-150"
+              >
+                אינסטגרם
               </a>
             </li>
           </ul>

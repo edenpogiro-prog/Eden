@@ -2,10 +2,16 @@ import { COACHES, CoachKey, FALLBACK_WHATSAPP } from "@/lib/site";
 
 // Which coach handles which service area. Ambiguous / unknown -> fallback.
 const SERVICE_ROUTING: Record<string, CoachKey> = {
-  finance: "eden",
-  blueprint: "eden",
   couples: "sivan",
   parenting: "sivan",
+  blueprint: "sivan",
+  "personal-development": "sivan",
+  "future-leaders": "sivan",
+  finance: "eden",
+  "combo-family": "eden",
+  "combo-couples": "eden",
+  "digital-courses": "eden",
+  workshops: "eden",
 };
 
 /**

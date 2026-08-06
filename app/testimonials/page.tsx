@@ -7,7 +7,7 @@ import { whatsappLink } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "המלצות",
   description:
-    "משפחות מספרות על הליווי בהמטריה המשפחתית — זוגיות, הורות וכלכלה.",
+    "משפחות מספרות על הליווי בהמטרייה המשפחתית, זוגיות, הורות וכלכלה.",
   alternates: { canonical: "/testimonials" },
 };
 
@@ -22,7 +22,7 @@ export default function TestimonialsPage() {
             משפחות מספרות
           </h1>
           <p className="text-lg text-white/70 leading-relaxed max-w-xl">
-            מילים של משפחות שבחרו לבנות מערכת — ולא להמשיך לכבות שריפות.
+            מילים של משפחות שבחרו לבנות מערכת, ולא להמשיך לכבות שריפות.
           </p>
         </div>
       </header>

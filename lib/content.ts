@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type {
+  BlogPost,
   FAQ,
   PageDoc,
   Service,
@@ -132,6 +133,35 @@ export function getTeamMemberBySlug(slug: string): TeamMember | null {
     order: (data.order as number) ?? 99,
     content,
   };
+}
+
+// ---- Blog ----
+function toBlogPost(slug: string, data: Record<string, unknown>, content: string): BlogPost {
+  const words = content.trim().split(/\s+/).length;
+  return {
+    slug,
+    title: (data.title as string) ?? slug,
+    description: (data.description as string) ?? "",
+    date: (data.date as string) ?? "1970-01-01",
+    author: (data.author as string) ?? "המטרייה המשפחתית",
+    tags: (data.tags as string[]) ?? [],
+    cover: data.cover as string | undefined,
+    readingMinutes: Math.max(1, Math.ceil(words / 200)),
+    content,
+  };
+}
+
+/** All posts, newest first. */
+export function getBlogPosts(): BlogPost[] {
+  return readCollection("blog")
+    .map(({ slug, data, content }) => toBlogPost(slug, data, content))
+    .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+export function getBlogPostBySlug(slug: string): BlogPost | null {
+  const raw = bySlug("blog", slug);
+  if (!raw) return null;
+  return toBlogPost(slug, raw.data, raw.content);
 }
 
 // ---- Single-doc pages (home sections, our-story) ----

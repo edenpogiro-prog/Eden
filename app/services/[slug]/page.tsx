@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const service = getServiceBySlug(slug);
   if (!service) return {};
   return {
-    title: { absolute: service.metaTitle ?? `${service.title} | המטריה המשפחתית` },
+    title: { absolute: service.metaTitle ?? `${service.title} | המטרייה המשפחתית` },
     description: service.metaDescription ?? service.tagline,
     alternates: { canonical: `/services/${slug}` },
     openGraph: {
@@ -141,7 +141,7 @@ export default async function ServicePage({ params }: PageProps) {
               רוצים לשמוע עוד על {service.title}?
             </h2>
             <p className="text-white/70 mb-9 leading-relaxed max-w-lg mx-auto">
-              שלחו לנו הודעה בוואטסאפ — נחזור אליכם עם כל מה שצריך לדעת, בלי
+              שלחו לנו הודעה בוואטסאפ, נחזור אליכם עם כל מה שצריך לדעת, בלי
               התחייבות.
             </p>
             <div className="flex justify-center">

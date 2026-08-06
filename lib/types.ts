@@ -12,7 +12,17 @@ export interface Service {
   summary?: string; // expanded blurb for the services overview page
   metaTitle?: string;
   metaDescription?: string;
-  icon: "heart" | "sprout" | "coins" | "compass";
+  icon:
+    | "heart"
+    | "sprout"
+    | "coins"
+    | "compass"
+    | "layers"
+    | "link"
+    | "graduation"
+    | "sparkles"
+    | "presentation"
+    | "star";
   routingKey: string; // maps to whatsapp routing (finance/couples/parenting/blueprint)
   order: number;
   forWhom?: string[];
@@ -41,6 +51,18 @@ export interface TeamMember {
   credentials?: string[];
   order: number;
   content: string;
+}
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  date: string; // ISO date
+  author: string;
+  tags: string[];
+  cover?: string; // path under /public
+  readingMinutes: number;
+  content: string; // MDX body
 }
 
 export interface PageDoc {

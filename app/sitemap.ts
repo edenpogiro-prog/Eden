@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { getServices, getTeam } from "@/lib/content";
+import { getBlogPosts, getServices, getTeam } from "@/lib/content";
 import { SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE.url;
-  const staticRoutes = ["", "/services", "/our-story", "/testimonials", "/contact"];
+  const staticRoutes = ["", "/services", "/our-story", "/blog", "/podcast", "/testimonials", "/contact"];
 
   const staticEntries = staticRoutes.map((path) => ({
     url: `${base}${path}`,
@@ -27,5 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...serviceEntries, ...teamEntries];
+  const blogEntries = getBlogPosts().map((p) => ({
+    url: `${base}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticEntries, ...serviceEntries, ...teamEntries, ...blogEntries];
 }

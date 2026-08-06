@@ -22,7 +22,6 @@ export default function ServicePath({
     >
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="text-center mb-20">
-          <p className="eyebrow eyebrow-light justify-center">הדרך החוצה</p>
           <h2
             id="service-path-title"
             className="text-4xl sm:text-6xl text-white leading-[1.1]"

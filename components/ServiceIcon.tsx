@@ -1,10 +1,28 @@
-import { Heart, Sprout, Coins, Compass, type LucideIcon } from "lucide-react";
+import {
+  Heart,
+  Sprout,
+  Coins,
+  Compass,
+  Layers,
+  Link2,
+  GraduationCap,
+  Sparkles,
+  Presentation,
+  Star,
+  type LucideIcon,
+} from "lucide-react";
 
 const MAP: Record<string, LucideIcon> = {
   heart: Heart,
   sprout: Sprout,
   coins: Coins,
   compass: Compass,
+  layers: Layers,
+  link: Link2,
+  graduation: GraduationCap,
+  sparkles: Sparkles,
+  presentation: Presentation,
+  star: Star,
 };
 
 export default function ServiceIcon({

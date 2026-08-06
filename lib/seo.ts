@@ -1,5 +1,5 @@
 import { COACHES, SITE } from "@/lib/site";
-import type { FAQ, Service, TeamMember } from "@/lib/types";
+import type { BlogPost, FAQ, Service, TeamMember } from "@/lib/types";
 
 // Organization / ProfessionalService. NOTE: @type is ProfessionalService
 // (non-clinical). If practitioners are licensed clinicians, revisit whether
@@ -15,7 +15,7 @@ export function organizationLd() {
     areaServed: "IL",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "רעננה",
+      addressLocality: "ראשון לציון",
       addressCountry: "IL",
     },
     employee: Object.values(COACHES).map((c) => ({
@@ -60,6 +60,21 @@ export function faqLd(faqs: FAQ[]) {
       name: f.question,
       acceptedAnswer: { "@type": "Answer", text: f.answer },
     })),
+  };
+}
+
+export function articleLd(post: BlogPost) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    inLanguage: "he",
+    author: { "@type": "Person", name: post.author },
+    publisher: { "@type": "ProfessionalService", name: SITE.name, url: SITE.url },
+    url: `${SITE.url}/blog/${post.slug}`,
+    ...(post.cover ? { image: `${SITE.url}${post.cover}` } : {}),
   };
 }
 

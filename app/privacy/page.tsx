@@ -3,7 +3,7 @@ import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "מדיניות פרטיות",
-  description: "מדיניות הפרטיות של אתר המטריה המשפחתית.",
+  description: "מדיניות הפרטיות של אתר המטרייה המשפחתית.",
   alternates: { canonical: "/privacy" },
   robots: { index: false },
 };
