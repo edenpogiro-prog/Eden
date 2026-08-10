@@ -365,7 +365,7 @@
     background:#fff;
     border:1px solid var(--line);
     border-radius:6px;
-    padding:2rem;
+    padding:2.5rem 2rem;
     box-shadow:0 24px 48px -24px rgba(169,58,38,.25);
   }
   .summary-card .tag{ font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mauve); margin-bottom:.75rem; display:block; }
@@ -373,13 +373,13 @@
   .summary-card .summary-empty svg{ width:2.15rem; height:2.15rem; color:var(--gold); opacity:.6; }
   .summary-card p.headline{
     font-family:'SuezOneEmbed','Suez One',serif;
-    font-size:1.45rem;
-    margin:0 0 1rem;
+    font-size:1.6rem;
+    margin:0 0 .5rem;
     min-height:2.9em;
   }
-  .summary-card .duration{ font-variant-numeric:tabular-nums; color:var(--ember-deep); font-size:.95rem; margin-bottom:1.5rem; }
+  .summary-card .duration{ font-variant-numeric:tabular-nums; color:var(--ember-deep); font-size:.95rem; margin-bottom:1.75rem; }
   .summary-card .next{ font-size:.88rem; color:var(--mauve); border-top:1px solid var(--line); padding-top:1rem; margin-bottom:1.5rem; }
-  .cta-row{ display:flex; flex-direction:column; gap:.7rem; }
+  .cta-row{ display:flex; flex-direction:column; gap:.7rem; border-top:1px solid var(--line); padding-top:1.5rem; }
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
     font-family:'HeeboEmbed','Heebo',sans-serif;
@@ -392,7 +392,7 @@
   .btn-primary{ background:var(--ember); color:#fff; }
   .btn-secondary{ background:transparent; color:var(--ember-deep); border:1.5px solid var(--ember-deep); }
   .btn[aria-disabled="true"]{ opacity:.45; pointer-events:none; }
-  .hint{ font-size:.82rem; color:var(--mauve); margin-top:.6rem; }
+  .hint{ font-size:.82rem; color:var(--mauve); margin-top:.9rem; text-align:center; }
 
   /* ---------- COACHES ---------- */
   .coaches{ padding-block: clamp(3.5rem, 9vh, 6rem); color:var(--ink); }
@@ -482,7 +482,7 @@
         <div class="step">
           <span class="num">02</span>
           <h3>סדנה</h3>
-          <p>מפגש מעמיק יותר, מחצי יום ועד יום שלם, עם כלים מעשיים שאפשר להתחיל להשתמש בהם כבר למחרת.</p>
+          <p>מפגש מעמיק יותר של כ-3 שעות, עם כלים מעשיים שאפשר להתחיל להשתמש בהם כבר למחרת.</p>
         </div>
         <div class="step">
           <span class="num">03</span>
@@ -535,7 +535,6 @@
         </div>
 
         <div class="summary-card">
-          <span class="tag">היום שלכם</span>
           <div class="summary-empty" id="summaryEmpty" aria-hidden="true">
             <svg viewBox="0 0 24 24" width="34" height="34" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C6.5 2 2 8 2 13H22C22 8 17.5 2 12 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
@@ -545,7 +544,6 @@
           </div>
           <p class="headline" id="summaryHeadline"></p>
           <p class="duration" id="summaryDuration"></p>
-          <p class="next">השלב הבא: ליווי אישי אופציונלי לעובדים שירצו להמשיך, אחד על אחד.</p>
           <div class="cta-row">
             <a class="btn btn-primary" id="waBtn" href="#" target="_blank" rel="noopener" aria-disabled="true">שליחה בוואטסאפ</a>
             <a class="btn btn-secondary" id="mailBtn" href="#" aria-disabled="true">שליחה במייל</a>
