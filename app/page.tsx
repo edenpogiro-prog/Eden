@@ -63,7 +63,28 @@ export default async function HomePage() {
             style={{ right: "78%", bottom: "3%", animationDelay: "9s", animationDuration: "14s" }}
           />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[94svh] flex flex-col items-center justify-center text-center py-24">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[94svh] flex flex-col items-center py-10 sm:py-14">
+          <span
+            className="relative block w-36 h-36 sm:w-48 sm:h-48 rounded-full overflow-hidden hero-word"
+            style={{ animationDelay: "0ms" }}
+          >
+            <Image
+              src="/images/logo-white.jpg"
+              alt="המטרייה המשפחתית"
+              fill
+              sizes="(min-width: 640px) 192px, 144px"
+              className="object-cover"
+            />
+          </span>
+          <div className="flex-1 flex flex-col items-center justify-center text-center w-full">
+          <p
+            className="text-base sm:text-lg text-champagne-100 leading-relaxed mb-6 max-w-xl hero-word"
+            style={{ animationDelay: "120ms" }}
+          >
+            ברוכים הבאים למטרייה המשפחתית!
+            <br />
+            אנחנו שמחים לארח אתכם במותג המשפחתי, חברתי וכלכלי המוביל בישראל
+          </p>
           <h1 className="text-[2.75rem] sm:text-7xl lg:text-[5.5rem] text-white leading-[1.08] mb-8">
             {headlineWords.map((w, i) => (
               // NBSP inside the inline-block span — a plain trailing space
@@ -71,7 +92,7 @@ export default async function HomePage() {
               <span
                 key={i}
                 className="hero-word"
-                style={{ animationDelay: `${200 + i * 90}ms` }}
+                style={{ animationDelay: `${460 + i * 90}ms` }}
               >
                 {i < headlineWords.length - 1 ? `${w} ` : w}
               </span>
@@ -79,7 +100,7 @@ export default async function HomePage() {
           </h1>
           <p
             className="text-lg sm:text-2xl text-white/70 leading-relaxed mb-11 max-w-2xl hero-word"
-            style={{ animationDelay: `${300 + headlineWords.length * 90}ms` }}
+            style={{ animationDelay: `${560 + headlineWords.length * 90}ms` }}
           >
             {fm.heroSubhead?.split("\n").map((line, i, all) => (
               <span key={i}>
@@ -90,7 +111,7 @@ export default async function HomePage() {
           </p>
           <div
             className="flex flex-col sm:flex-row items-center justify-center gap-3 hero-word"
-            style={{ animationDelay: `${420 + headlineWords.length * 90}ms` }}
+            style={{ animationDelay: `${680 + headlineWords.length * 90}ms` }}
           >
             <Magnetic>
               <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
@@ -101,6 +122,7 @@ export default async function HomePage() {
                 <ArrowLeft className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               </Link>
             </Magnetic>
+          </div>
           </div>
         </div>
 
