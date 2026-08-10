@@ -183,7 +183,7 @@
 
   /* ---------- FUNNEL ---------- */
   .funnel{ padding-block: clamp(4rem, 10vh, 7rem); }
-  .funnel h2{ font-size:clamp(1.15rem, 2.5vw, 1.75rem); max-width:56ch; margin-bottom:.75rem; }
+  .funnel h2{ font-size:clamp(1.15rem, 2.5vw, 1.75rem); max-width:56ch; margin-bottom:.75rem; margin-inline:auto; text-align:center; }
   @media (min-width:640px){ .funnel h2{ white-space:nowrap; } }
   .funnel .lede{ color:rgba(255,255,255,.72); max-width:52ch; margin-bottom:3rem; font-size:1.05rem; margin-inline:auto; text-align:center; }
   .steps{ display:grid; gap:1.25rem; grid-template-columns:repeat(3,1fr); }
@@ -907,30 +907,42 @@
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeUmbrella();
   });
 
-  var FORMATS = [
-    {id:'lecture', label:'הרצאה', duration:'כשעה עד שעה וחצי'},
-    {id:'half', label:'סדנה חצי יום', duration:'כ-3 שעות'},
-    {id:'full', label:'סדנה יום מלא', duration:'יום שלם'}
+  var PRIMARY_FORMATS = [
+    {id:'lecture', label:'הרצאה', duration:'חצי שעה עד שעה'},
+    {id:'workshop', label:'סדנה', duration:'כ-3 שעות'}
   ];
+  var ONGOING_FORMAT = {id:'ongoing', label:'ליווי מתמשך', duration:'ליווי מתמשך'};
   var TOPICS = FLAT_TOPICS;
 
-  var state = { format: null, topics: [] };
+  var state = { primary: null, ongoing: false, topics: [] };
 
   var formatWrap = document.getElementById('formatChips');
   var topicWrap = document.getElementById('topicChips');
 
-  FORMATS.forEach(function(f){
+  var primaryButtons = [];
+  PRIMARY_FORMATS.forEach(function(f){
     var b = document.createElement('button');
     b.type = 'button'; b.className = 'chip'; b.textContent = f.label;
     b.setAttribute('aria-pressed', 'false');
     b.addEventListener('click', function(){
-      state.format = f.id;
-      Array.prototype.forEach.call(formatWrap.children, function(c){ c.setAttribute('aria-pressed', 'false'); });
+      state.primary = f.id;
+      primaryButtons.forEach(function(btn){ btn.setAttribute('aria-pressed', 'false'); });
       b.setAttribute('aria-pressed', 'true');
       update();
     });
+    primaryButtons.push(b);
     formatWrap.appendChild(b);
   });
+
+  var ongoingBtn = document.createElement('button');
+  ongoingBtn.type = 'button'; ongoingBtn.className = 'chip'; ongoingBtn.textContent = ONGOING_FORMAT.label;
+  ongoingBtn.setAttribute('aria-pressed', 'false');
+  ongoingBtn.addEventListener('click', function(){
+    state.ongoing = !state.ongoing;
+    ongoingBtn.setAttribute('aria-pressed', state.ongoing ? 'true' : 'false');
+    update();
+  });
+  formatWrap.appendChild(ongoingBtn);
 
   TOPICS.forEach(function(topic){
     var b = document.createElement('button');
@@ -969,11 +981,27 @@
     return arr.slice(0, -1).join(', ') + ' ו' + arr[arr.length-1];
   }
 
-  function update(){
-    var format = FORMATS.filter(function(f){ return f.id === state.format; })[0];
-    var topicLabels = labelsFor(state.topics, TOPICS);
+  function selectedLabel(){
+    var parts = [];
+    var p = PRIMARY_FORMATS.filter(function(f){ return f.id === state.primary; })[0];
+    if (p) parts.push(p.label);
+    if (state.ongoing) parts.push(ONGOING_FORMAT.label);
+    return parts.join(' + ');
+  }
 
-    if (!format || topicLabels.length === 0){
+  function selectedDuration(){
+    var parts = [];
+    var p = PRIMARY_FORMATS.filter(function(f){ return f.id === state.primary; })[0];
+    if (p) parts.push(p.duration);
+    if (state.ongoing) parts.push(ONGOING_FORMAT.duration);
+    return parts.join(' + ');
+  }
+
+  function update(){
+    var topicLabels = labelsFor(state.topics, TOPICS);
+    var hasFormat = !!state.primary || state.ongoing;
+
+    if (!hasFormat || topicLabels.length === 0){
       headline.textContent = '';
       duration.textContent = '';
       summaryEmpty.style.display = 'flex';
@@ -984,17 +1012,18 @@
     }
 
     summaryEmpty.style.display = 'none';
-    headline.textContent = format.label + ' בנושא ' + joinHe(topicLabels);
-    duration.textContent = '⏱ ' + format.duration;
+    var label = selectedLabel();
+    headline.textContent = label + ' בנושא ' + joinHe(topicLabels);
+    duration.textContent = '⏱ ' + selectedDuration();
     hint.style.display = 'none';
 
-    var msg = 'היי עדן וסיון! מתעניינים ב' + format.label + ' בנושא ' + joinHe(topicLabels) + '. אשמח לתאם פרטים.';
+    var msg = 'היי עדן וסיון! מתעניינים ב' + label + ' בנושא ' + joinHe(topicLabels) + '. אשמח לתאם פרטים.';
     var encoded = encodeURIComponent(msg);
 
     waBtn.href = 'https://wa.me/972525205281?text=' + encoded;
     waBtn.removeAttribute('aria-disabled');
 
-    mailBtn.href = 'mailto:sivaneden@mitriafamily.co.il?subject=' + encodeURIComponent('בקשה ל' + format.label) + '&body=' + encoded;
+    mailBtn.href = 'mailto:sivaneden@mitriafamily.co.il?subject=' + encodeURIComponent('בקשה ל' + label) + '&body=' + encoded;
     mailBtn.removeAttribute('aria-disabled');
   }
 
