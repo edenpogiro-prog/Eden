@@ -15,6 +15,35 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+function BrochureCTA() {
+  return (
+    <section className="text-center">
+      <a
+        href="https://www.mitriafamily.co.il/brochure"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn-brochure group"
+      >
+        <span className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-champagne-100 border border-champagne-400/70 flex items-center justify-center">
+          <Umbrella className="w-7 h-7 sm:w-8 sm:h-8 text-champagne-600" strokeWidth={1.5} />
+        </span>
+        <span className="text-right">
+          <span className="block font-bold text-ink text-xl sm:text-2xl leading-tight">
+            המטרייה המשפחתית אצלכם בארגון
+          </span>
+          <span className="block text-sm sm:text-base text-mauve mt-1.5">
+            כל הנושאים, הסילבוס והפרטים לצוות ה־HR שלכם
+          </span>
+        </span>
+        <ChevronLeft
+          className="w-6 h-6 sm:w-7 sm:h-7 text-champagne-600 flex-shrink-0 transition-transform duration-200 group-hover:-translate-x-1 rtl:rotate-180"
+          strokeWidth={1.5}
+        />
+      </a>
+    </section>
+  );
+}
+
 export function generateStaticParams() {
   return getServices().map((s) => ({ slug: s.slug }));
 }
@@ -90,6 +119,9 @@ export default async function ServicePage({ params }: PageProps) {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-14">
+        {/* Brochure CTA — corporate/HR leave-behind, workshops only */}
+        {service.routingKey === "workshops" && <BrochureCTA />}
+
         {/* For whom */}
         {service.forWhom && service.forWhom.length > 0 && (
           <section>
@@ -135,32 +167,7 @@ export default async function ServicePage({ params }: PageProps) {
         )}
 
         {/* Brochure CTA — corporate/HR leave-behind, workshops only */}
-        {service.routingKey === "workshops" && (
-          <section className="text-center">
-            <a
-              href="https://www.mitriafamily.co.il/brochure"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-4 rounded-[16px] border border-champagne-400/60 bg-gradient-to-l from-champagne-100 to-white px-7 py-5 shadow-[0_10px_34px_-14px_rgba(168,124,62,0.4)] transition-all duration-200 hover:-translate-y-0.5 hover:border-champagne-600 hover:shadow-[0_16px_42px_-12px_rgba(168,124,62,0.5)]"
-            >
-              <span className="flex-shrink-0 w-11 h-11 rounded-full bg-champagne-100 border border-champagne-400/70 flex items-center justify-center">
-                <Umbrella className="w-5 h-5 text-champagne-600" strokeWidth={1.5} />
-              </span>
-              <span className="text-right">
-                <span className="block font-bold text-ink text-lg leading-tight">
-                  לברושור האינטראקטיבי המלא להרצאות וסדנאות
-                </span>
-                <span className="block text-sm text-mauve mt-1">
-                  כל הנושאים, הסילבוס והדוגמאות לצוות ה־HR שלכם
-                </span>
-              </span>
-              <ChevronLeft
-                className="w-5 h-5 text-champagne-600 flex-shrink-0 transition-transform duration-200 group-hover:-translate-x-1 rtl:rotate-180"
-                strokeWidth={1.5}
-              />
-            </a>
-          </section>
-        )}
+        {service.routingKey === "workshops" && <BrochureCTA />}
 
         {/* CTA */}
         <section className="scene-dusk aurora grain relative overflow-hidden rounded-[24px] p-10 sm:p-14 text-center">

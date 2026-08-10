@@ -207,6 +207,43 @@
     @apply inline-flex items-center justify-center gap-2 border border-white/25 hover:border-champagne-400 text-white font-semibold px-7 py-3.5 rounded-[10px] transition-colors duration-200;
   }
 
+  /* Brochure CTA — glinting champagne card, distinct from the fire WhatsApp buttons */
+  .btn-brochure {
+    @apply relative overflow-hidden inline-flex items-center gap-4 rounded-[18px] px-8 py-6 sm:px-10 sm:py-7 transition-all duration-200;
+    background-image: linear-gradient(135deg, var(--champagne-100), #fff 55%, var(--champagne-100));
+    border: 1.5px solid var(--champagne-400);
+    box-shadow: 0 10px 34px -14px rgba(168, 124, 62, 0.4);
+  }
+
+  .btn-brochure:hover {
+    transform: translateY(-3px);
+    border-color: var(--champagne-600);
+    box-shadow: 0 20px 50px -12px rgba(168, 124, 62, 0.55);
+  }
+
+  .btn-brochure::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.95) 50%,
+      transparent 60%
+    );
+    transform: translateX(-170%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .btn-brochure {
+      animation: breathe-gold 3.2s ease-in-out infinite;
+    }
+    .btn-brochure::after {
+      animation: shine 4s ease-in-out infinite;
+    }
+  }
+
   /* Flat card — hairline border; depth appears only on interaction */
   .card {
     @apply bg-white border border-line rounded-[18px];
@@ -550,6 +587,16 @@
   }
 }
 
+@keyframes breathe-gold {
+  0%,
+  100% {
+    box-shadow: 0 10px 34px -14px rgba(168, 124, 62, 0.35);
+  }
+  50% {
+    box-shadow: 0 10px 48px -8px rgba(227, 185, 120, 0.7);
+  }
+}
+
 @keyframes meteor {
   0% {
     opacity: 0;
@@ -619,7 +666,9 @@
   .meteor,
   .ember-p,
   .btn-primary,
-  .btn-primary::after {
+  .btn-primary::after,
+  .btn-brochure,
+  .btn-brochure::after {
     animation: none !important;
   }
 }
