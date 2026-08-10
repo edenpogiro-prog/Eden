@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, Check, Umbrella } from "lucide-react";
+import Image from "next/image";
+import { ChevronLeft, Check } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getServices, getServiceBySlug } from "@/lib/content";
@@ -24,8 +25,14 @@ function BrochureCTA() {
         rel="noopener noreferrer"
         className="btn-brochure group"
       >
-        <span className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-champagne-100 border border-champagne-400/70 flex items-center justify-center">
-          <Umbrella className="w-7 h-7 sm:w-8 sm:h-8 text-champagne-600" strokeWidth={1.5} />
+        <span className="relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-champagne-400/70">
+          <Image
+            src="/images/brochure-cta.jpg"
+            alt=""
+            fill
+            sizes="64px"
+            className="object-cover"
+          />
         </span>
         <span className="text-right">
           <span className="block font-bold text-ink text-xl sm:text-2xl leading-tight">
