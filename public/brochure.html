@@ -901,8 +901,22 @@
   overlay.addEventListener('click', function(e){
     if (e.target === overlay) closeUmbrella();
   });
+  var FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeUmbrella();
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape'){ closeUmbrella(); return; }
+    if (e.key !== 'Tab') return;
+    var focusable = Array.prototype.slice.call(overlay.querySelectorAll(FOCUSABLE_SELECTOR));
+    if (focusable.length === 0) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first){
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last){
+      e.preventDefault();
+      first.focus();
+    }
   });
 
   var PRIMARY_FORMATS = [

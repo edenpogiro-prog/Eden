@@ -35,7 +35,8 @@ export default function PrivacyPage() {
       </p>
       <h2>יצירת קשר</h2>
       <p>
-        בכל שאלה בנוגע לפרטיות ניתן לפנות אלינו במייל: {SITE.email}.
+        בכל שאלה בנוגע לפרטיות ניתן לפנות אלינו במייל:{" "}
+        <span dir="ltr">{SITE.email}</span>.
       </p>
     </div>
   );

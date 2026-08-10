@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
+import AccessibilityWidget from "@/components/AccessibilityWidget";
 import { SITE } from "@/lib/site";
 import { organizationLd } from "@/lib/seo";
 
@@ -54,6 +55,16 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd()) }}
         />
+        {/* Apply saved accessibility-widget preferences before paint, to avoid a flash of unscaled/normal-contrast content */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{
+              var s=localStorage.getItem('a11y-font-scale');
+              if(s==='2'||s==='3')document.documentElement.setAttribute('data-a11y-font-scale',s);
+              if(localStorage.getItem('a11y-contrast')==='true')document.documentElement.setAttribute('data-a11y-contrast','true');
+            }catch(e){}})();`,
+          }}
+        />
         {plausibleDomain ? (
           <Script
             defer
@@ -76,6 +87,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
+        <AccessibilityWidget />
       </body>
     </html>
   );

@@ -13,6 +13,8 @@
   --abyss-800: #2a1b36;
   --ember-700: #a93a26;
   --ember-600: #d94e33;
+  /* Darkened slightly from ember-500 so white button text clears WCAG AA contrast */
+  --ember-550: #e85c40;
   --ember-500: #f26648;
   --ember-300: #f5a98c;
   --ember-100: #fadfd2;
@@ -165,7 +167,9 @@
   /* Buttons — living fire: breathing halo + periodic shine sweep */
   .btn-primary {
     @apply relative overflow-hidden inline-flex items-center justify-center gap-2 text-white font-bold px-7 py-3.5 rounded-[10px];
-    background-image: linear-gradient(135deg, var(--ember-500), var(--ember-600));
+    /* font-size + darkened gradient together clear WCAG AA large-text contrast (white text) */
+    font-size: 1.25rem;
+    background-image: linear-gradient(135deg, var(--ember-550), var(--ember-600));
     transition:
       filter 0.2s ease,
       box-shadow 0.35s ease;
@@ -671,4 +675,88 @@
   .btn-brochure::after {
     animation: none !important;
   }
+  .btn-brochure:hover {
+    transform: none !important;
+  }
+}
+
+/* ── Accessibility widget: font scale + high contrast (opt-in) ─────────── */
+html[data-a11y-font-scale="2"] {
+  font-size: 112.5%;
+}
+html[data-a11y-font-scale="3"] {
+  font-size: 125%;
+}
+
+html[data-a11y-contrast="true"] {
+  --parchment: #ffffff;
+  --veil: #ffffff;
+  --line: #000000;
+  --ink: #000000;
+  --mauve: #000000;
+}
+
+html[data-a11y-contrast="true"] body {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+html[data-a11y-contrast="true"] [class*="text-ink"],
+html[data-a11y-contrast="true"] [class*="text-mauve"] {
+  color: #000000 !important;
+}
+
+html[data-a11y-contrast="true"] .scene-night,
+html[data-a11y-contrast="true"] .scene-dusk,
+html[data-a11y-contrast="true"] .scene-journey,
+html[data-a11y-contrast="true"] .scene-copper,
+html[data-a11y-contrast="true"] .scene-dawn,
+html[data-a11y-contrast="true"] .scene-day,
+html[data-a11y-contrast="true"] header {
+  background: #000000 !important;
+}
+
+html[data-a11y-contrast="true"] .scene-night *,
+html[data-a11y-contrast="true"] .scene-dusk *,
+html[data-a11y-contrast="true"] .scene-journey *,
+html[data-a11y-contrast="true"] .scene-copper *,
+html[data-a11y-contrast="true"] .scene-dawn *,
+html[data-a11y-contrast="true"] header * {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+html[data-a11y-contrast="true"] .card,
+html[data-a11y-contrast="true"] [class*="bg-white"] {
+  background: #ffffff !important;
+  border-color: #000000 !important;
+}
+
+html[data-a11y-contrast="true"] a {
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+html[data-a11y-contrast="true"] .btn-primary {
+  background-image: none !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html[data-a11y-contrast="true"] .btn-outline {
+  border-color: #000000 !important;
+  color: #000000 !important;
+}
+
+html[data-a11y-contrast="true"] .grain::after,
+html[data-a11y-contrast="true"] .aurora::before,
+html[data-a11y-contrast="true"] .starfield::before,
+html[data-a11y-contrast="true"] .horizon::after,
+html[data-a11y-contrast="true"] .spotlight::before {
+  display: none !important;
+}
+
+html[data-a11y-contrast="true"] :focus-visible {
+  outline: 3px solid #000000 !important;
+  outline-offset: 2px !important;
 }

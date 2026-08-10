@@ -64,7 +64,7 @@ export default function ContactPage() {
                   className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"
                 >
                   <Mail className="w-4 h-4" strokeWidth={1.5} />
-                  {c.email}
+                  <span dir="ltr">{c.email}</span>
                 </a>
                 {c.slug === "sivan" && (
                   <>

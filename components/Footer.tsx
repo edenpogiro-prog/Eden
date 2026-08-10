@@ -52,6 +52,7 @@ export default function Footer() {
               <Mail className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               <a
                 href={`mailto:${SITE.email}`}
+                dir="ltr"
                 className="hover:text-white transition-colors duration-150"
               >
                 {SITE.email}
@@ -87,9 +88,14 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} {SITE.name}. כל הזכויות שמורות.
           </span>
-          <Link href="/privacy" className="hover:text-white transition-colors duration-150">
-            מדיניות פרטיות
-          </Link>
+          <span className="flex gap-x-4">
+            <Link href="/privacy" className="hover:text-white transition-colors duration-150">
+              מדיניות פרטיות
+            </Link>
+            <Link href="/accessibility" className="hover:text-white transition-colors duration-150">
+              הצהרת נגישות
+            </Link>
+          </span>
         </div>
       </div>
     </footer>

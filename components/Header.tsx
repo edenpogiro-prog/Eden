@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 function LogoMark() {
   return (
@@ -25,6 +28,53 @@ function LogoMark() {
 export default function Header() {
   const [open, setOpen] = useState(false);
   const wa = whatsappLink();
+  const toggleBtnRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const panel = panelRef.current;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    panel?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR)?.focus();
+
+    const mainEl = document.getElementById("main-content");
+    const footerEl = document.querySelector("footer");
+    const headerEl = document.querySelector("header");
+    [mainEl, footerEl, headerEl].forEach((el) => el?.setAttribute("inert", ""));
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== "Tab" || !panel) return;
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      [mainEl, footerEl, headerEl].forEach((el) => el?.removeAttribute("inert"));
+      document.body.style.overflow = prevOverflow;
+      (previouslyFocused ?? toggleBtnRef.current)?.focus();
+    };
+  }, [open]);
 
   return (
     <>
@@ -59,9 +109,12 @@ export default function Header() {
           {/* Mobile toggle */}
           <button
             type="button"
+            ref={toggleBtnRef}
             onClick={() => setOpen(true)}
             className="md:hidden p-2 text-white"
             aria-label="פתח תפריט"
+            aria-haspopup="dialog"
+            aria-expanded={open}
           >
             <Menu className="w-7 h-7" strokeWidth={1.5} />
           </button>
@@ -70,7 +123,13 @@ export default function Header() {
 
       {/* Mobile drawer — inverted night panel, display-type links */}
       {open && (
-        <div className="fixed inset-0 z-[60] bg-abyss-950 md:hidden flex flex-col aurora">
+        <div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="תפריט ניווט"
+          className="fixed inset-0 z-[60] bg-abyss-950 md:hidden flex flex-col aurora"
+        >
           <div className="relative h-16 px-4 flex items-center justify-between border-b border-white/10">
             <span className="flex items-center gap-2.5">
               <LogoMark />
