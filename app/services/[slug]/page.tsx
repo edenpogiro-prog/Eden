@@ -25,12 +25,12 @@ function BrochureCTA() {
         rel="noopener noreferrer"
         className="btn-brochure group"
       >
-        <span className="relative flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-champagne-400/70">
+        <span className="relative flex-shrink-0 w-24 h-24 sm:w-36 sm:h-32 rounded-[14px] overflow-hidden border-2 border-champagne-400/70 shadow-[0_8px_22px_-8px_rgba(168,124,62,0.55)]">
           <Image
             src="/images/brochure-cta.jpg"
-            alt=""
+            alt="הרצאה של המטרייה המשפחתית בארגון"
             fill
-            sizes="64px"
+            sizes="(min-width: 640px) 144px, 96px"
             className="object-cover"
           />
         </span>
