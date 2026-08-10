@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, Check } from "lucide-react";
+import { ChevronLeft, Check, Umbrella } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getServices, getServiceBySlug } from "@/lib/content";
@@ -131,6 +131,34 @@ export default async function ServicePage({ params }: PageProps) {
               כל מה שרציתם לדעת על {service.title}
             </h2>
             <FAQAccordion faqs={service.faqs} />
+          </section>
+        )}
+
+        {/* Brochure CTA — corporate/HR leave-behind, workshops only */}
+        {service.routingKey === "workshops" && (
+          <section className="text-center">
+            <a
+              href="https://www.mitriafamily.co.il/brochure"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-4 rounded-[16px] border border-champagne-400/60 bg-gradient-to-l from-champagne-100 to-white px-7 py-5 shadow-[0_10px_34px_-14px_rgba(168,124,62,0.4)] transition-all duration-200 hover:-translate-y-0.5 hover:border-champagne-600 hover:shadow-[0_16px_42px_-12px_rgba(168,124,62,0.5)]"
+            >
+              <span className="flex-shrink-0 w-11 h-11 rounded-full bg-champagne-100 border border-champagne-400/70 flex items-center justify-center">
+                <Umbrella className="w-5 h-5 text-champagne-600" strokeWidth={1.5} />
+              </span>
+              <span className="text-right">
+                <span className="block font-bold text-ink text-lg leading-tight">
+                  לברושור האינטראקטיבי המלא להרצאות וסדנאות
+                </span>
+                <span className="block text-sm text-mauve mt-1">
+                  כל הנושאים, הסילבוס והדוגמאות לצוות ה־HR שלכם
+                </span>
+              </span>
+              <ChevronLeft
+                className="w-5 h-5 text-champagne-600 flex-shrink-0 transition-transform duration-200 group-hover:-translate-x-1 rtl:rotate-180"
+                strokeWidth={1.5}
+              />
+            </a>
           </section>
         )}
 
