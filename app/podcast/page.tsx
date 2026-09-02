@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Instagram, MessageCircle, Podcast } from "lucide-react";
 import { SITE } from "@/lib/site";
 import Magnetic from "@/components/Magnetic";
+import TrackedWhatsAppLink from "@/components/TrackedWhatsAppLink";
 
 export const metadata: Metadata = {
   title: "הפודקאסט",
@@ -98,15 +99,16 @@ export default function PodcastPage() {
                 👑 לעוד תכנים, הצטרפי למעגל הפנימי שלי, לקהילת "מעומס לדיוק":
               </p>
               <Magnetic>
-                <a
+                <TrackedWhatsAppLink
                   href={SITE.sivanCommunityWhatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  service="podcast-community"
                   className="btn-primary"
                 >
                   <MessageCircle className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
                   הצטרפו לקהילת הוואטסאפ
-                </a>
+                </TrackedWhatsAppLink>
               </Magnetic>
             </div>
           </div>

@@ -12,3 +12,18 @@ export function track(event: string, props?: Props): void {
     plausible(event, props ? { props } : undefined);
   }
 }
+
+// Reports the "WhatsApp click" conversion action to the Google Ads tag
+// (AW-18418042944) installed in app/layout.tsx. No-op if gtag isn't loaded
+// (e.g. blocked by an ad blocker) — never throws.
+export function trackWhatsAppConversion(): void {
+  if (typeof window === "undefined") return;
+  const gtag = (window as unknown as {
+    gtag?: (...args: unknown[]) => void;
+  }).gtag;
+  if (typeof gtag === "function") {
+    gtag("event", "conversion", {
+      send_to: "AW-18418042944/fP-WCL6MiOscEMCQtM5E",
+    });
+  }
+}

@@ -3,6 +3,7 @@ import { Instagram, Phone, Mail, MessageCircle, Podcast } from "lucide-react";
 import { COACHES, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import ContactForm from "@/components/ContactForm";
+import TrackedWhatsAppLink from "@/components/TrackedWhatsAppLink";
 
 export const metadata: Metadata = {
   title: "צור קשר",
@@ -30,7 +31,7 @@ export default function ContactPage() {
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Direct channels */}
         <div className="space-y-4">
-          <a
+          <TrackedWhatsAppLink
             href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
@@ -41,24 +42,25 @@ export default function ContactPage() {
               <p className="font-bold">וואטסאפ</p>
               <p className="text-white/80 text-sm">הדרך המהירה ביותר להתחיל</p>
             </div>
-          </a>
+          </TrackedWhatsAppLink>
 
           {Object.values(COACHES).map((c) => (
             <div key={c.slug} className="card p-5">
               <p className="font-bold text-ink mb-1">{c.name}</p>
               <p className="text-mauve text-sm mb-4">{c.role}</p>
               <div className="flex flex-col gap-2 text-mauve">
-                <a
+                <TrackedWhatsAppLink
                   href={`https://wa.me/${c.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  service={c.slug === "eden" ? "finance" : "couples"}
                   className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"
                 >
                   <Phone className="w-4 h-4" strokeWidth={1.5} />
                   <span dir="ltr">
                     {c.whatsapp.replace("972", "0").replace(/(\d{3})(\d{7})/, "$1-$2")}
                   </span>
-                </a>
+                </TrackedWhatsAppLink>
                 <a
                   href={`mailto:${c.email}`}
                   className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"
