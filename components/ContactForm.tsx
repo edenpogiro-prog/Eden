@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle2 } from "lucide-react";
-import { track } from "@/lib/analytics";
+import { track, trackContactConversion } from "@/lib/analytics";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -37,6 +37,7 @@ export default function ContactForm() {
       if (res.ok && json.success) {
         setStatus("success");
         track("form_submit", { form: "contact" });
+        trackContactConversion();
         form.reset();
       } else {
         setStatus("error");

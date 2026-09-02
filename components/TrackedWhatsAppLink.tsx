@@ -1,7 +1,7 @@
 "use client";
 
 import { AnchorHTMLAttributes, ReactNode } from "react";
-import { track, trackWhatsAppConversion } from "@/lib/analytics";
+import { track, trackContactConversion } from "@/lib/analytics";
 
 // Wraps a raw <a> to a WhatsApp destination (wa.me DM link, or a
 // chat.whatsapp.com community invite) with click tracking, for the few
@@ -23,7 +23,7 @@ export default function TrackedWhatsAppLink({
       {...rest}
       onClick={(e) => {
         track("whatsapp_click", { service: service ?? "general" });
-        trackWhatsAppConversion();
+        trackContactConversion();
         onClick?.(e);
       }}
     >

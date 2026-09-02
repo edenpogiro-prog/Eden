@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageCircle } from "lucide-react";
-import { track, trackWhatsAppConversion } from "@/lib/analytics";
+import { track, trackContactConversion } from "@/lib/analytics";
 
 interface Props {
   href: string;
@@ -25,7 +25,7 @@ export default function WhatsAppCTA({
       rel="noopener noreferrer"
       onClick={() => {
         track("whatsapp_click", { service: service ?? "general" });
-        trackWhatsAppConversion();
+        trackContactConversion();
       }}
       className={`${variant === "primary" ? "btn-primary" : "btn-outline"} plausible-event-name=whatsapp_click ${className}`}
     >

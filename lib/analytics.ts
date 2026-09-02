@@ -13,10 +13,13 @@ export function track(event: string, props?: Props): void {
   }
 }
 
-// Reports the "WhatsApp click" conversion action to the Google Ads tag
-// (AW-18418042944) installed in app/layout.tsx. No-op if gtag isn't loaded
-// (e.g. blocked by an ad blocker) — never throws.
-export function trackWhatsAppConversion(): void {
+// Reports the "Contact conversion page" conversion action to the Google Ads
+// tag (AW-18418042944) installed in app/layout.tsx — fired from every
+// WhatsApp click and from a successful contact-form submission, since the
+// site has no dedicated "thank you" page for either to load a static event
+// snippet on. No-op if gtag isn't loaded (e.g. blocked by an ad blocker) —
+// never throws.
+export function trackContactConversion(): void {
   if (typeof window === "undefined") return;
   const gtag = (window as unknown as {
     gtag?: (...args: unknown[]) => void;
