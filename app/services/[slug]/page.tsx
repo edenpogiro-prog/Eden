@@ -9,6 +9,7 @@ import { getServices, getServiceBySlug } from "@/lib/content";
 import { whatsappLink, serviceMessage } from "@/lib/whatsapp";
 import { serviceLd, faqLd, breadcrumbLd } from "@/lib/seo";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import ContactAssurance from "@/components/ContactAssurance";
 import ServiceIcon from "@/components/ServiceIcon";
 import FAQAccordion from "@/components/FAQAccordion";
 
@@ -189,6 +190,7 @@ export default async function ServicePage({ params }: PageProps) {
             <div className="flex justify-center">
               <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" service={service.routingKey} />
             </div>
+            <ContactAssurance tone="light" className="mt-6" />
           </div>
         </section>
       </div>

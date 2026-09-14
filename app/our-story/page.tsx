@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { ArrowLeft } from "lucide-react";
 import { getPage, getTeam } from "@/lib/content";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import ContactAssurance from "@/components/ContactAssurance";
 import ScrollReveal from "@/components/ScrollReveal";
 import Tilt from "@/components/Tilt";
 import { whatsappLink } from "@/lib/whatsapp";
@@ -45,6 +46,7 @@ export default async function OurStoryPage() {
         <div className="prose-rtl">{content}</div>
         <div className="mt-12">
           <WhatsAppCTA href={whatsappLink()} label="דברו איתנו בוואטסאפ" />
+          <ContactAssurance align="start" className="mt-5" />
         </div>
       </article>
 

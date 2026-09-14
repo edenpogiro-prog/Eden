@@ -9,6 +9,7 @@ import { getBlogPosts, getBlogPostBySlug } from "@/lib/content";
 import { whatsappLink } from "@/lib/whatsapp";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import ContactAssurance from "@/components/ContactAssurance";
 import Magnetic from "@/components/Magnetic";
 
 interface PageProps {
@@ -149,6 +150,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <WhatsAppCTA href={whatsappLink()} label="דברו איתנו בוואטסאפ" />
               </Magnetic>
             </div>
+            <ContactAssurance tone="light" className="mt-6" />
           </div>
         </div>
 

@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { getPage, getServices, getTestimonials, getTeam } from "@/lib/content";
 import { whatsappLink } from "@/lib/whatsapp";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import ContactAssurance from "@/components/ContactAssurance";
 import ServicePath from "@/components/ServicePath";
 import TestimonialCard from "@/components/TestimonialCard";
 import FAQAccordion from "@/components/FAQAccordion";
@@ -122,6 +123,12 @@ export default async function HomePage() {
                 <ArrowLeft className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               </Link>
             </Magnetic>
+          </div>
+          <div
+            className="hero-word"
+            style={{ animationDelay: `${780 + headlineWords.length * 90}ms` }}
+          >
+            <ContactAssurance tone="light" className="mt-6" />
           </div>
           </div>
         </div>
@@ -326,6 +333,7 @@ export default async function HomePage() {
                 <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
               </Magnetic>
             </div>
+            <ContactAssurance className="mt-6" />
           </ScrollReveal>
         </div>
       </section>

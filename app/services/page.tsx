@@ -5,6 +5,7 @@ import { getServices } from "@/lib/content";
 import ServiceIcon from "@/components/ServiceIcon";
 import ScrollReveal from "@/components/ScrollReveal";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import ContactAssurance from "@/components/ContactAssurance";
 import { whatsappLink, serviceMessage } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
@@ -170,6 +171,7 @@ export default function ServicesPage() {
               <div className="flex justify-center">
                 <WhatsAppCTA href={whatsappLink()} label="דברו איתנו בוואטסאפ" />
               </div>
+              <ContactAssurance tone="light" className="mt-6" />
             </div>
           </div>
         </ScrollReveal>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Instagram, Phone, Mail, MessageCircle, Podcast } from "lucide-react";
-import { COACHES, SITE } from "@/lib/site";
+import { COACHES, PHONE_DISPLAY, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import ContactForm from "@/components/ContactForm";
 import TrackedWhatsAppLink from "@/components/TrackedWhatsAppLink";
+import TrackedPhoneLink from "@/components/TrackedPhoneLink";
 
 export const metadata: Metadata = {
   title: "צור קשר",
@@ -40,27 +41,32 @@ export default function ContactPage() {
             <MessageCircle className="w-7 h-7 flex-shrink-0" strokeWidth={1.5} />
             <div>
               <p className="font-bold">וואטסאפ</p>
-              <p className="text-white/80 text-sm">הדרך המהירה ביותר להתחיל</p>
+              <p className="text-white/80 text-sm">
+                הדרך המהירה ביותר להתחיל · בדרך כלל עונים תוך שעה
+              </p>
             </div>
           </TrackedWhatsAppLink>
+
+          {/* Phone, as its own channel — a wa.me link on a desktop with no
+              linked WhatsApp Web session dead-ends on a QR screen. */}
+          <TrackedPhoneLink
+            location="contact-page"
+            className="flex items-center gap-4 card p-5 hover:border-ember-300 transition-colors duration-200"
+          >
+            <Phone className="w-7 h-7 flex-shrink-0 text-ember-600" strokeWidth={1.5} />
+            <div>
+              <p className="font-bold text-ink">
+                טלפון <span dir="ltr">{PHONE_DISPLAY}</span>
+              </p>
+              <p className="text-mauve text-sm">מעדיפים לדבר? התקשרו אלינו</p>
+            </div>
+          </TrackedPhoneLink>
 
           {Object.values(COACHES).map((c) => (
             <div key={c.slug} className="card p-5">
               <p className="font-bold text-ink mb-1">{c.name}</p>
               <p className="text-mauve text-sm mb-4">{c.role}</p>
               <div className="flex flex-col gap-2 text-mauve">
-                <TrackedWhatsAppLink
-                  href={`https://wa.me/${c.whatsapp}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  service={c.slug === "eden" ? "finance" : "couples"}
-                  className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"
-                >
-                  <Phone className="w-4 h-4" strokeWidth={1.5} />
-                  <span dir="ltr">
-                    {c.whatsapp.replace("972", "0").replace(/(\d{3})(\d{7})/, "$1-$2")}
-                  </span>
-                </TrackedWhatsAppLink>
                 <a
                   href={`mailto:${c.email}`}
                   className="flex items-center gap-2 hover:text-ember-600 transition-colors duration-150"

@@ -1,37 +1,28 @@
-import { COACHES, CoachKey, FALLBACK_WHATSAPP } from "@/lib/site";
+import { WHATSAPP } from "@/lib/site";
 
-// Which coach handles which service area. Ambiguous / unknown -> fallback.
-const SERVICE_ROUTING: Record<string, CoachKey> = {
-  couples: "sivan",
-  parenting: "sivan",
-  blueprint: "sivan",
-  "personal-development": "sivan",
-  "future-leaders": "sivan",
-  finance: "eden",
-  "combo-family": "eden",
-  "combo-couples": "eden",
-  "digital-courses": "eden",
-  workshops: "eden",
-};
+// The pre-filled text is deliberately short. A full sentence written in the
+// visitor's name reads like a form rather than something they wrote, and a
+// meaningful share of people who open WhatsApp from the site delete it,
+// hesitate over how to phrase a replacement, and close the app without
+// sending. Short enough to send as-is is the whole point.
+const DEFAULT_MESSAGE = "היי, אשמח לפרטים";
 
 /**
- * Build a wa.me deep link with a pre-filled Hebrew message, routed to the
- * right coach for the given service. Unknown service -> fallback number.
+ * Build a wa.me deep link with a short pre-filled Hebrew message.
+ *
+ * Every entry point on the site lands on the same number; `service` is kept in
+ * the signature so call sites don't have to change, but routing is gone — the
+ * message text is what tells us which coach the inquiry is for.
  */
 export function whatsappLink(opts?: {
   service?: string;
   message?: string;
 }): string {
-  const { service, message } = opts ?? {};
-  const key = service ? SERVICE_ROUTING[service] : undefined;
-  const number = key ? COACHES[key].whatsapp : FALLBACK_WHATSAPP;
-  const text =
-    message ??
-    "היי, הגעתי דרך האתר ואשמח לשמוע עוד על הליווי שלכם 🙂";
-  return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+  const text = opts?.message ?? DEFAULT_MESSAGE;
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
 }
 
-/** Pre-filled message tuned per service, so the coach gets a warm, qualified lead. */
+/** Per-service opener — still short enough to send without editing. */
 export function serviceMessage(service: string, serviceTitle: string): string {
-  return `היי, הגעתי דרך האתר. אשמח לשמוע עוד על "${serviceTitle}".`;
+  return `היי, אשמח לפרטים על ${serviceTitle}`;
 }

@@ -13,32 +13,31 @@ export const SITE = {
   sivanCommunityWhatsappUrl: "https://chat.whatsapp.com/IjroivUQkO0KSsSLqydYoQ",
 } as const;
 
-// Coaches. WhatsApp routing:
-//   couples / parenting / blueprint / personal-development / future-leaders -> Sivan (052-5205281)
-//   everything else -> Eden (052-8559050)
-// Change a number here and every routed CTA updates. Both coaches share one
-// inbox (sivaneden@mitriafamily.co.il) rather than personal addresses.
+// One line for the whole site. Every WhatsApp CTA and every phone link points
+// here — nothing is routed per coach any more, because a split inbox meant
+// nobody owned the reply. Which coach an inquiry is for is carried in the
+// pre-filled message text instead (see lib/whatsapp.ts).
+export const WHATSAPP = "972528559050"; // wa.me format
+export const PHONE_TEL = "+972528559050"; // tel: href
+export const PHONE_DISPLAY = "052-855-9050";
+
+// Coaches. Names, roles and the shared inbox — no per-coach phone numbers.
 export const COACHES = {
   eden: {
     slug: "eden",
     name: "עדן פוגירו",
     role: "יועץ כלכלי למשפחה ומומחה להשקעות נדל\"ן בארה\"ב",
-    whatsapp: "972528559050", // 052-8559050
     email: "sivaneden@mitriafamily.co.il",
   },
   sivan: {
     slug: "sivan",
     name: "סיון ארזי פוגירו",
     role: "מנטורית רב-תחומית לזוגיות, הורות וניהול חיים",
-    whatsapp: "972525205281", // 052-5205281
     email: "sivaneden@mitriafamily.co.il",
   },
 } as const;
 
 export type CoachKey = keyof typeof COACHES;
-
-// Fallback number for ambiguous inquiries (general contact) — Sivan by default.
-export const FALLBACK_WHATSAPP = COACHES.sivan.whatsapp;
 
 export const NAV = [
   { href: "/", label: "בית" },

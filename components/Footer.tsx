@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Instagram, Mail, Phone, Podcast } from "lucide-react";
-import { NAV, SITE } from "@/lib/site";
+import { NAV, PHONE_DISPLAY, SITE } from "@/lib/site";
+import TrackedPhoneLink from "@/components/TrackedPhoneLink";
 
 export default function Footer() {
   return (
@@ -42,11 +43,13 @@ export default function Footer() {
           <ul className="space-y-2.5 text-white/60">
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-              <span dir="ltr">052-8559050</span> · עדן
-            </li>
-            <li className="flex items-center gap-2">
-              <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-              <span dir="ltr">052-5205281</span> · סיון
+              <TrackedPhoneLink
+                location="footer"
+                dir="ltr"
+                className="hover:text-white transition-colors duration-150"
+              >
+                {PHONE_DISPLAY}
+              </TrackedPhoneLink>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />

@@ -10,6 +10,7 @@ import { COACHES, SITE } from "@/lib/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import { personLd, breadcrumbLd } from "@/lib/seo";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
+import ContactAssurance from "@/components/ContactAssurance";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -42,8 +43,7 @@ export default async function TeamPage({ params }: PageProps) {
 
   const coach = COACHES[member.coachKey];
   const wa = whatsappLink({
-    message: `היי ${member.name.split(" ")[0]}, הגעתי דרך האתר ואשמח לשוחח.`,
-    service: member.coachKey === "eden" ? "finance" : "couples",
+    message: `היי, אשמח לפרטים על הליווי של ${member.name.split(" ")[0]}`,
   });
 
   // The other coach — cross-linked at the bottom of the bio.
@@ -151,10 +151,10 @@ export default async function TeamPage({ params }: PageProps) {
 
       <div className="bg-ember-50 rounded-[18px] p-8 text-center">
         <p className="text-ink font-semibold mb-5">
-          רוצים לדבר ישירות עם {member.name.split(" ")[0]}?
+          רוצים לשמוע עוד על הליווי של {member.name.split(" ")[0]}?
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <WhatsAppCTA href={wa} label={`וואטסאפ עם ${member.name.split(" ")[0]}`} />
+          <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
           {member.slug === "sivan" && (
             <>
               <a
@@ -178,6 +178,7 @@ export default async function TeamPage({ params }: PageProps) {
             </>
           )}
         </div>
+        <ContactAssurance className="mt-6" />
       </div>
       </div>
     </article>
