@@ -2,11 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Phone } from "lucide-react";
 import { getPage, getServices, getTestimonials, getTeam } from "@/lib/content";
 import { whatsappLink } from "@/lib/whatsapp";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
 import ContactAssurance from "@/components/ContactAssurance";
+import TrackedPhoneLink from "@/components/TrackedPhoneLink";
 import ServicePath from "@/components/ServicePath";
 import TestimonialCard from "@/components/TestimonialCard";
 import FAQAccordion from "@/components/FAQAccordion";
@@ -41,28 +42,30 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ═══ 00:00 — לילה. Full-viewport night sky. ═══ */}
-      <section className="scene-night starfield horizon grain relative overflow-hidden">
-        {/* Shooting stars + embers rising from the horizon fire */}
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-          <span className="meteor" style={{ top: "12%", right: "18%" }} />
-          <span
-            className="meteor"
-            style={{ top: "6%", right: "55%", animationDelay: "6.5s" }}
+      {/* ═══ 00:00 — Full-bleed video hero (clean, minimal — igin.tech-style concept) ═══ */}
+      <section className="relative overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0">
+          <video
+            className="hero-bg-video absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster="/images/hero-family.jpg"
+          >
+            <source src="/videos/hero-family.mp4" type="video/mp4" />
+          </video>
+          {/* Static fallback for prefers-reduced-motion, and while the video loads */}
+          <Image
+            src="/images/hero-family.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="hero-bg-fallback object-cover"
           />
-          <span className="ember-p" style={{ right: "22%", bottom: "6%" }} />
-          <span
-            className="ember-p"
-            style={{ right: "38%", bottom: "4%", animationDelay: "3s", animationDuration: "13s" }}
-          />
-          <span
-            className="ember-p"
-            style={{ right: "61%", bottom: "7%", animationDelay: "6s" }}
-          />
-          <span
-            className="ember-p"
-            style={{ right: "78%", bottom: "3%", animationDelay: "9s", animationDuration: "14s" }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-abyss-950/75 via-abyss-950/55 to-abyss-950/90" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[94svh] flex flex-col items-center py-10 sm:py-14">
           <span
@@ -118,26 +121,19 @@ export default async function HomePage() {
               <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
             </Magnetic>
             <Magnetic strength={0.18}>
+              <TrackedPhoneLink location="hero" className="btn-outline-light">
+                <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+                התקשרו עכשיו
+              </TrackedPhoneLink>
+            </Magnetic>
+            <Magnetic strength={0.18}>
               <Link href="/services" className="btn-outline-light">
                 לשירותים שלנו
                 <ArrowLeft className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               </Link>
             </Magnetic>
           </div>
-          <div
-            className="hero-word"
-            style={{ animationDelay: `${780 + headlineWords.length * 90}ms` }}
-          >
-            <ContactAssurance tone="light" className="mt-6" />
           </div>
-          </div>
-        </div>
-
-        <div
-          aria-hidden="true"
-          className="absolute bottom-7 inset-x-0 flex justify-center"
-        >
-          <span className="scroll-cue" />
         </div>
       </section>
 

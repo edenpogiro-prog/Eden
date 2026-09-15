@@ -12,9 +12,15 @@ export function organizationLd() {
     slogan: SITE.tagline,
     url: SITE.url,
     email: SITE.email,
+    // NAP: phone must stay identical to the Google Business Profile listing.
+    telephone: "+972-52-855-9050",
     areaServed: "IL",
+    sameAs: [SITE.instagramUrl, SITE.spotifyShowUrl],
+    // Street name only, no house number — deliberate, and kept identical to the
+    // Google Business Profile listing so the two records match.
     address: {
       "@type": "PostalAddress",
+      streetAddress: "עליזה בגין",
       addressLocality: "ראשון לציון",
       addressCountry: "IL",
     },

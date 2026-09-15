@@ -263,7 +263,8 @@
   }
 
   .scene-dusk {
-    background: linear-gradient(180deg, #1a1122, #331a35);
+    /* Starts at the same dark tone the hero video fades to, for a seamless join */
+    background: linear-gradient(180deg, #0f0a16, #331a35);
   }
 
   .scene-journey {
@@ -429,6 +430,25 @@
 
   .spotlight:hover::before {
     opacity: 1;
+  }
+
+  /* Scattered-photo service tiles — a slight per-card tilt that straightens
+     and lifts on hover/focus. Off on narrow screens (not enough margin to
+     rotate safely), off on request for reduced motion. */
+  .service-tile-wrap {
+    transform: none;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (min-width: 640px) {
+    .service-tile-wrap {
+      transform: rotate(var(--tilt-deg, 0deg));
+    }
+  }
+
+  .service-tile-wrap:hover,
+  .service-tile-wrap:focus-within {
+    transform: rotate(0deg) translateY(-6px);
   }
 
   /* Glass panel for lit scenes */
@@ -678,6 +698,25 @@
   .btn-brochure:hover {
     transform: none !important;
   }
+  .service-tile-wrap {
+    transform: none !important;
+  }
+  .service-tile-wrap:hover,
+  .service-tile-wrap:focus-within {
+    transform: none !important;
+  }
+  .hero-bg-video {
+    display: none !important;
+  }
+  .hero-bg-fallback {
+    display: block !important;
+  }
+}
+
+/* Hero background: video by default, static photo fallback while it loads
+   or under prefers-reduced-motion (see the media query above). */
+.hero-bg-fallback {
+  display: none;
 }
 
 /* ── Accessibility widget: font scale + high contrast (opt-in) ─────────── */
