@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
@@ -32,10 +32,19 @@ export default function ServicePath({
   title: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const stageRef = useRef<HTMLDivElement>(null);
 
   if (services.length === 0) return null;
   const active = services[activeIndex];
   const activePhoto = SERVICE_PHOTOS[active.slug];
+
+  function selectService(i: number) {
+    setActiveIndex(i);
+    // On narrow screens the stage sits below the list, off-screen once picked —
+    // bring it into view. "nearest" is a no-op on desktop, where it's already
+    // visible beside the list.
+    stageRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 
   return (
     <section
@@ -65,7 +74,7 @@ export default function ServicePath({
                   <button
                     key={s.slug}
                     type="button"
-                    onClick={() => setActiveIndex(i)}
+                    onClick={() => selectService(i)}
                     aria-pressed={isActive}
                     className={`w-full flex items-center gap-3 px-5 py-4 text-right transition-colors duration-150 ${
                       isActive ? "bg-white/10" : "hover:bg-white/5"
@@ -99,7 +108,10 @@ export default function ServicePath({
             </div>
 
             {/* Stage */}
-            <div className="rounded-[20px] overflow-hidden glass-warm !rounded-[20px]">
+            <div
+              ref={stageRef}
+              className="rounded-[20px] overflow-hidden glass-warm !rounded-[20px] scroll-mt-24"
+            >
               <div className="relative h-56 sm:h-72">
                 <Image
                   key={active.slug}
