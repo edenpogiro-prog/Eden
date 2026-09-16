@@ -4,7 +4,13 @@
 export const SITE = {
   name: "המטרייה המשפחתית",
   tagline: "כל המשפחה. תחת מטרייה אחת.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.mitriafamily.co.il",
+  // Non-www, because that is the host that actually serves the site: the
+  // www. hostname 307-redirects here. Declaring www as canonical while the
+  // server redirects away from it told Google the opposite of the truth on
+  // every canonical tag, sitemap <loc>, JSON-LD url and og:url.
+  // NOTE: if NEXT_PUBLIC_SITE_URL is set in the Vercel project settings it
+  // overrides this — it has to say non-www there too.
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mitriafamily.co.il",
   locale: "he_IL",
   email: "sivaneden@mitriafamily.co.il",
   spotifyShowUrl:
