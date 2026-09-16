@@ -1,5 +1,11 @@
-import { COACHES, SITE } from "@/lib/site";
+import { BUSINESS, COACHES, COACH_PROFILES, SITE } from "@/lib/site";
 import type { BlogPost, FAQ, Service, TeamMember } from "@/lib/types";
+
+/** The team page for a coach, matched by the display name used in frontmatter. */
+function coachUrl(name: string): string | undefined {
+  const match = Object.values(COACHES).find((c) => c.name === name);
+  return match ? `${SITE.url}/team/${match.slug}` : undefined;
+}
 
 // Organization / ProfessionalService. NOTE: @type is ProfessionalService
 // (non-clinical). If practitioners are licensed clinicians, revisit whether
@@ -24,10 +30,17 @@ export function organizationLd() {
       addressLocality: "ראשון לציון",
       addressCountry: "IL",
     },
+    // Both stay out of the payload until confirmed against the Business
+    // Profile — see BUSINESS in lib/site.ts.
+    ...(BUSINESS.openingHours ? { openingHours: BUSINESS.openingHours } : {}),
+    ...(BUSINESS.geo
+      ? { geo: { "@type": "GeoCoordinates", ...BUSINESS.geo } }
+      : {}),
     employee: Object.values(COACHES).map((c) => ({
       "@type": "Person",
       name: c.name,
       jobTitle: c.role,
+      url: `${SITE.url}/team/${c.slug}`,
     })),
   };
 }
@@ -46,13 +59,36 @@ export function serviceLd(service: Service) {
 }
 
 export function personLd(member: TeamMember) {
+  const profiles = COACH_PROFILES[member.coachKey] ?? [];
   return {
     "@context": "https://schema.org",
     "@type": "Person",
     name: member.name,
     jobTitle: member.role,
+    ...(member.credentials?.length
+      ? { knowsAbout: member.credentials }
+      : {}),
     worksFor: { "@type": "ProfessionalService", name: SITE.name, url: SITE.url },
     url: `${SITE.url}/team/${member.slug}`,
+    ...(profiles.length ? { sameAs: profiles } : {}),
+  };
+}
+
+/**
+ * Course schema for the digital-courses page. Deliberately minimal: rich
+ * results for courses need real `hasCourseInstance` entries (dates, mode,
+ * price), which don't exist until a course actually launches. This is correct
+ * markup and groundwork, not a rich-result win on its own.
+ */
+export function courseLd(service: Service) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: service.title,
+    description: service.metaDescription || service.tagline,
+    inLanguage: "he",
+    url: `${SITE.url}/services/${service.slug}`,
+    provider: { "@type": "ProfessionalService", name: SITE.name, url: SITE.url },
   };
 }
 
@@ -77,7 +113,14 @@ export function articleLd(post: BlogPost) {
     description: post.description,
     datePublished: post.date,
     inLanguage: "he",
-    author: { "@type": "Person", name: post.author },
+    // Linking the author to their /team page connects the post to a Person
+    // entity that carries the credentials — the E-E-A-T signal Google looks
+    // for on family- and money-adjacent content.
+    author: {
+      "@type": "Person",
+      name: post.author,
+      ...(coachUrl(post.author) ? { url: coachUrl(post.author) } : {}),
+    },
     publisher: { "@type": "ProfessionalService", name: SITE.name, url: SITE.url },
     url: `${SITE.url}/blog/${post.slug}`,
     ...(post.cover ? { image: `${SITE.url}${post.cover}` } : {}),

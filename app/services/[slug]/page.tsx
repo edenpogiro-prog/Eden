@@ -6,7 +6,7 @@ import { ChevronLeft, Check } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getServices, getServiceBySlug } from "@/lib/content";
-import { serviceLd, faqLd, breadcrumbLd } from "@/lib/seo";
+import { serviceLd, faqLd, breadcrumbLd, courseLd } from "@/lib/seo";
 import ContactActions from "@/components/ContactActions";
 import ServiceIcon from "@/components/ServiceIcon";
 import FAQAccordion from "@/components/FAQAccordion";
@@ -83,6 +83,8 @@ export default async function ServicePage({ params }: PageProps) {
 
   const jsonLd = serviceLd(service);
   const faq = faqLd(service.faqs ?? []);
+  // Only the digital-courses page is a Course; every other entry is a Service.
+  const course = service.slug === "digital-courses" ? courseLd(service) : null;
   const crumbs = breadcrumbLd([
     { name: "בית", path: "/" },
     { name: "שירותים", path: "/services" },
@@ -95,6 +97,9 @@ export default async function ServicePage({ params }: PageProps) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
       {faq && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }} />
+      )}
+      {course && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(course) }} />
       )}
 
       {/* Hero — night band */}

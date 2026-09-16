@@ -6,6 +6,7 @@ import { CalendarDays, ChevronLeft, Clock3, UserRound } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getBlogPosts, getBlogPostBySlug } from "@/lib/content";
+import { COACHES } from "@/lib/site";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
 import ContactActions from "@/components/ContactActions";
 
@@ -57,6 +58,20 @@ export default async function BlogPostPage({ params }: PageProps) {
     { name: post.title, path: `/blog/${slug}` },
   ]);
 
+  // The coach who wrote this, so the byline can point at their bio. Matching
+  // on the display name used in frontmatter keeps the MDX free of slugs.
+  const author = Object.values(COACHES).find((c) => c.name === post.author);
+
+  // Related reading, by shared tag, falling back to the newest other posts.
+  // Posts that link nowhere are dead ends: Google can't pass authority through
+  // them to the service pages, and readers leave at the end of the article.
+  const others = getBlogPosts().filter((p) => p.slug !== slug);
+  const related = (
+    others.filter((p) => p.tags.some((t) => post.tags.includes(t))).length > 0
+      ? others.filter((p) => p.tags.some((t) => post.tags.includes(t)))
+      : others
+  ).slice(0, 3);
+
   return (
     <article>
       <script
@@ -100,7 +115,16 @@ export default async function BlogPostPage({ params }: PageProps) {
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white/60 border-t border-white/10 pt-5">
             <span className="flex items-center gap-1.5">
               <UserRound className="w-4 h-4 text-champagne-400" strokeWidth={1.5} aria-hidden="true" />
-              {post.author}
+              {author ? (
+                <Link
+                  href={`/team/${author.slug}`}
+                  className="text-white/80 hover:text-white underline underline-offset-4 decoration-champagne-400/60 transition-colors duration-150"
+                >
+                  {post.author}
+                </Link>
+              ) : (
+                post.author
+              )}
             </span>
             <span className="flex items-center gap-1.5">
               <CalendarDays className="w-4 h-4 text-champagne-400" strokeWidth={1.5} aria-hidden="true" />
@@ -131,6 +155,30 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Body */}
         <div className="prose-rtl">{body}</div>
+
+        {/* Related reading */}
+        {related.length > 0 && (
+          <section className="mt-14 pt-10 border-t border-line">
+            <p className="eyebrow">להמשיך לקרוא</p>
+            <ul className="grid sm:grid-cols-2 gap-3">
+              {related.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={`/blog/${p.slug}`}
+                    className="card card-hover group block h-full p-5"
+                  >
+                    <h2 className="!font-sans font-bold text-ink group-hover:text-ember-700 transition-colors duration-200 leading-snug">
+                      {p.title}
+                    </h2>
+                    <span className="text-mauve/80 text-xs mt-2 block">
+                      {p.readingMinutes} דקות קריאה
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* CTA */}
         <div className="scene-dusk aurora grain relative overflow-hidden rounded-[24px] p-8 sm:p-12 text-center mt-14">

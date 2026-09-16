@@ -12,6 +12,7 @@ export interface Service {
   summary?: string; // expanded blurb for the services overview page
   metaTitle?: string;
   metaDescription?: string;
+  updated?: string; // ISO date of the last real content edit — feeds sitemap lastmod
   icon:
     | "heart"
     | "sprout"
@@ -49,6 +50,7 @@ export interface TeamMember {
   photo?: string;
   tagline?: string;
   credentials?: string[];
+  updated?: string; // ISO date of the last real content edit
   order: number;
   content: string;
 }

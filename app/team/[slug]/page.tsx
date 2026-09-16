@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, Check, Instagram, Podcast } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { getTeam, getTeamMemberBySlug } from "@/lib/content";
+import { getBlogPostsByAuthor, getTeam, getTeamMemberBySlug } from "@/lib/content";
 import { COACHES, SITE } from "@/lib/site";
 import { personLd, breadcrumbLd } from "@/lib/seo";
 import ContactActions from "@/components/ContactActions";
@@ -43,6 +43,11 @@ export default async function TeamPage({ params }: PageProps) {
 
   // The other coach — cross-linked at the bottom of the bio.
   const other = getTeam().find((m) => m.slug !== slug);
+
+  // Everything this coach has written, gathered in one place. Costs no new
+  // content and gives each bio a real body of work to point at.
+  const posts = getBlogPostsByAuthor(member.name);
+  const firstName = member.name.split(" ")[0];
 
   const crumbs = breadcrumbLd([
     { name: "בית", path: "/" },
@@ -104,6 +109,33 @@ export default async function TeamPage({ params }: PageProps) {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
       <div className="prose-rtl max-w-prose mb-10">{body}</div>
+
+      {/* Everything this coach has written */}
+      {posts.length > 0 && (
+        <section className="mb-10">
+          <p className="eyebrow">מהבלוג של {firstName}</p>
+          <ul className="grid gap-3">
+            {posts.map((p) => (
+              <li key={p.slug}>
+                <Link
+                  href={`/blog/${p.slug}`}
+                  className="card card-hover group block p-5"
+                >
+                  <h2 className="!font-sans font-bold text-ink group-hover:text-ember-700 transition-colors duration-200 leading-snug">
+                    {p.title}
+                  </h2>
+                  <p className="text-mauve text-sm leading-snug mt-1.5">
+                    {p.description}
+                  </p>
+                  <span className="text-mauve/80 text-xs mt-2 block">
+                    {p.readingMinutes} דקות קריאה
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Meet the other coach */}
       {other && (

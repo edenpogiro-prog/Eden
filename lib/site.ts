@@ -39,6 +39,28 @@ export const COACHES = {
 
 export type CoachKey = keyof typeof COACHES;
 
+// Public profiles that belong to each coach individually, emitted as `sameAs`
+// on their Person schema. This is what tells Google that the host of the
+// podcast, the account on Instagram and the author of the blog posts are one
+// person — the cheapest expertise signal the site can give.
+export const COACH_PROFILES: Record<CoachKey, string[]> = {
+  eden: [],
+  sivan: [SITE.instagramUrl, SITE.spotifyShowUrl],
+};
+
+// Facts that must stay identical to the Google Business Profile listing.
+// A field stays null until the real value is confirmed: publishing a guess
+// here would show wrong hours to searchers and break the very consistency the
+// profile depends on. "Open at the time of search" entered Google's top five
+// local ranking factors in 2026, so these are worth filling in properly.
+export const BUSINESS: {
+  openingHours: string[] | null; // e.g. ["Su-Th 09:00-20:00"]
+  geo: { latitude: number; longitude: number } | null;
+} = {
+  openingHours: null,
+  geo: null,
+};
+
 export const NAV = [
   { href: "/", label: "בית" },
   { href: "/services", label: "שירותים" },

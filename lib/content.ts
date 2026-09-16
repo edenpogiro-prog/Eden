@@ -54,6 +54,7 @@ export function getServices(): Service[] {
       summary: data.summary as string | undefined,
       metaTitle: data.metaTitle as string | undefined,
       metaDescription: data.metaDescription as string | undefined,
+      updated: data.updated as string | undefined,
       icon: (data.icon as Service["icon"]) ?? "compass",
       routingKey: (data.routingKey as string) ?? "",
       order: (data.order as number) ?? 99,
@@ -76,6 +77,7 @@ export function getServiceBySlug(slug: string): Service | null {
     summary: data.summary as string | undefined,
     metaTitle: data.metaTitle as string | undefined,
     metaDescription: data.metaDescription as string | undefined,
+    updated: data.updated as string | undefined,
     icon: (data.icon as Service["icon"]) ?? "compass",
     routingKey: (data.routingKey as string) ?? "",
     order: (data.order as number) ?? 99,
@@ -112,6 +114,7 @@ export function getTeam(): TeamMember[] {
       photo: data.photo as string | undefined,
       tagline: data.tagline as string | undefined,
       credentials: (data.credentials as string[]) ?? [],
+      updated: data.updated as string | undefined,
       order: (data.order as number) ?? 99,
       content,
     })),
@@ -130,6 +133,7 @@ export function getTeamMemberBySlug(slug: string): TeamMember | null {
     photo: data.photo as string | undefined,
     tagline: data.tagline as string | undefined,
     credentials: (data.credentials as string[]) ?? [],
+    updated: data.updated as string | undefined,
     order: (data.order as number) ?? 99,
     content,
   };
@@ -156,6 +160,15 @@ export function getBlogPosts(): BlogPost[] {
   return readCollection("blog")
     .map(({ slug, data, content }) => toBlogPost(slug, data, content))
     .sort((a, b) => b.date.localeCompare(a.date));
+}
+
+/**
+ * Posts written by one coach, newest first. Powers the "from X's blog" list on
+ * a team page — an author hub built from content that already exists, which is
+ * the strongest expertise signal the site can give Google for free.
+ */
+export function getBlogPostsByAuthor(name: string): BlogPost[] {
+  return getBlogPosts().filter((p) => p.author === name);
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | null {
