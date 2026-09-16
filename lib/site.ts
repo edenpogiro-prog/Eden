@@ -104,7 +104,7 @@ export const BUSINESS: {
  *                    not the whole tag.
  */
 export const ANALYTICS = {
-  ga4Id: "",
+  ga4Id: "G-JL0HHC5R7E",
   gscVerification: "",
 };
 
