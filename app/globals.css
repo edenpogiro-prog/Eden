@@ -799,3 +799,24 @@ html[data-a11y-contrast="true"] :focus-visible {
   outline: 3px solid #000000 !important;
   outline-offset: 2px !important;
 }
+
+/* Floating buttons (accessibility widget, scroll-to-top) lift clear of the
+   mobile contact bar while it is showing, instead of sitting underneath it.
+   The attribute is set by components/StickyContact.tsx. */
+.fab-float {
+  transition: transform 0.28s ease;
+}
+html[data-contact-bar="true"] .fab-float {
+  transform: translateY(-4.9rem);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fab-float {
+    transition: none;
+  }
+}
+@media (min-width: 768px) {
+  /* The bar is mobile-only, so nothing should move on desktop. */
+  html[data-contact-bar="true"] .fab-float {
+    transform: none;
+  }
+}

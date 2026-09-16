@@ -75,7 +75,7 @@ export default function AccessibilityWidget() {
         aria-haspopup="true"
         aria-expanded={open}
         aria-controls="a11y-panel"
-        className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-[10px] bg-abyss-900 text-white shadow-pop flex items-center justify-center hover:bg-ember-600 transition-colors duration-200"
+        className="fab-float fixed bottom-6 right-6 z-40 w-11 h-11 rounded-[10px] bg-abyss-900 text-white shadow-pop flex items-center justify-center hover:bg-ember-600 transition-colors duration-200"
       >
         <Accessibility className="w-5 h-5" strokeWidth={1.5} />
       </button>
@@ -86,7 +86,7 @@ export default function AccessibilityWidget() {
           ref={panelRef}
           role="region"
           aria-label="הגדרות נגישות"
-          className="fixed bottom-20 right-6 z-40 w-72 max-w-[calc(100vw-3rem)] rounded-[14px] bg-white border border-line shadow-pop p-5"
+          className="fab-float fixed bottom-20 right-6 z-40 w-72 max-w-[calc(100vw-3rem)] rounded-[14px] bg-white border border-line shadow-pop p-5"
         >
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold text-ink text-base">הגדרות נגישות</h2>

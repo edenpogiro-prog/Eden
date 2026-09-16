@@ -56,7 +56,10 @@ export default function ContactForm() {
         <h3 className="text-xl font-bold text-ink mb-1">
           תודה! קיבלנו את הפנייה
         </h3>
-        <p className="text-mauve">נשמח לחזור אליכם בהקדם. 🙂</p>
+        {/* The one place a response time genuinely belongs *after* the action:
+            there is a real "after" here, unlike the WhatsApp button, which
+            hands the visitor off to another app the moment it is pressed. */}
+        <p className="text-mauve">נחזור אליכם תוך יום עסקים. 🙂</p>
       </div>
     );
   }

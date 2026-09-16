@@ -8,6 +8,8 @@ import remarkGfm from "remark-gfm";
 import { getServices, getServiceBySlug } from "@/lib/content";
 import { serviceLd, faqLd, breadcrumbLd, courseLd } from "@/lib/seo";
 import ContactActions from "@/components/ContactActions";
+import WhatsAppCTA from "@/components/WhatsAppCTA";
+import { whatsappLink, serviceMessage } from "@/lib/whatsapp";
 import ServiceIcon from "@/components/ServiceIcon";
 import FAQAccordion from "@/components/FAQAccordion";
 
@@ -121,6 +123,22 @@ export default async function ServicePage({ params }: PageProps) {
           <p className="text-lg sm:text-xl text-white/70 leading-relaxed max-w-2xl">
             {service.tagline}
           </p>
+
+          {/* These are the campaign's landing pages. Without this, the only way
+              to make contact sits at the very bottom of the page, past the FAQs. */}
+          <div className="mt-8">
+            <WhatsAppCTA
+              href={whatsappLink({
+                service: service.routingKey,
+                message: serviceMessage(service.routingKey, service.title),
+              })}
+              service={service.routingKey}
+              label="דברו איתנו בוואטסאפ"
+            />
+            <p className="text-white/55 text-[13px] mt-3">
+              שלחו הודעה, נחזור אליכם תוך יום עסקים
+            </p>
+          </div>
         </div>
       </section>
 

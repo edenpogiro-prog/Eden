@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
+import StickyContact from "@/components/StickyContact";
 import { ANALYTICS, SITE } from "@/lib/site";
 import { organizationLd } from "@/lib/seo";
 
@@ -107,6 +108,7 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <AccessibilityWidget />
+        <StickyContact />
       </body>
     </html>
   );

@@ -8,9 +8,11 @@ import { track, trackContactConversion } from "@/lib/analytics";
 import { whatsappLink, serviceMessage } from "@/lib/whatsapp";
 import { PHONE_TEL } from "@/lib/site";
 
-// The one CTA cluster used everywhere on the site: four identical, equally
-// weighted tiles (WhatsApp / call / services / leave an inquiry), so every
-// closing CTA looks and behaves the same no matter which page it's on.
+// The one CTA cluster used everywhere on the site: WhatsApp / call / services /
+// leave an inquiry, so every closing CTA looks and behaves the same no matter
+// which page it's on. The tiles share a shape but not a weight — WhatsApp
+// carries the ember fill and the rest stay quiet, because four equal options
+// ask the visitor to deliberate where one clear lead asks them to act.
 interface Props {
   /** "light" tiles for dark scene backgrounds, "dark" tiles for the light page ground. */
   tone?: "light" | "dark";
@@ -46,6 +48,10 @@ export default function ContactActions({
   const labelClass = light ? "text-white" : "text-ink";
 
   const tileBase = `group relative flex flex-col items-center justify-center gap-2.5 h-full min-h-[112px] sm:min-h-[128px] p-4 text-center transition-colors duration-200 ${tileClass}`;
+  // The WhatsApp tile carries the brand's ember fill so the eye lands on it
+  // first. Four identically-weighted tiles read as a menu to deliberate over;
+  // one clear lead and three quiet alternatives read as a next step.
+  const primaryTile = `group relative flex flex-col items-center justify-center gap-2.5 h-full min-h-[112px] sm:min-h-[128px] p-4 text-center rounded-[16px] text-white bg-[linear-gradient(135deg,var(--ember-550),var(--ember-600))] hover:brightness-[1.06] transition-[filter] duration-200`;
   const iconBase = `w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0 ${iconClass}`;
   const labelBase = `font-display text-sm sm:text-base leading-tight ${labelClass}`;
 
@@ -63,12 +69,14 @@ export default function ContactActions({
     onClick,
     icon,
     label,
+    primary = false,
   }: {
     href: string;
     external?: boolean;
     onClick?: () => void;
     icon: React.ReactNode;
     label: string;
+    primary?: boolean;
   }) {
     return (
       <TileFrame>
@@ -77,10 +85,26 @@ export default function ContactActions({
           target={external ? "_blank" : undefined}
           rel={external ? "noopener noreferrer" : undefined}
           onClick={onClick}
-          className={tileBase}
+          className={primary ? primaryTile : tileBase}
         >
-          <span className={iconBase}>{icon}</span>
-          <span className={labelBase}>{label}</span>
+          <span
+            className={
+              primary
+                ? "w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0 bg-white/20 text-white"
+                : iconBase
+            }
+          >
+            {icon}
+          </span>
+          <span
+            className={
+              primary
+                ? "font-display text-sm sm:text-base leading-tight text-white"
+                : labelBase
+            }
+          >
+            {label}
+          </span>
         </a>
       </TileFrame>
     );
@@ -106,12 +130,14 @@ export default function ContactActions({
   }
 
   return (
+    <div className={className}>
     <div
-      className={`grid grid-cols-2 ${hideServicesLink ? "sm:grid-cols-3" : "sm:grid-cols-4"} gap-3 sm:gap-4 ${className}`}
+      className={`grid grid-cols-2 ${hideServicesLink ? "sm:grid-cols-3" : "sm:grid-cols-4"} gap-3 sm:gap-4`}
     >
       <ActionTile
         href={wa}
         external
+        primary
         onClick={() => {
           track("whatsapp_click", { service: service ?? "general" });
           trackContactConversion();
@@ -137,6 +163,14 @@ export default function ContactActions({
         icon={<Mail className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />}
         label="השאירו פנייה"
       />
+    </div>
+      {/* Tied to the action rather than floating beside it: it describes what
+          happens when you press, which is the hesitation it exists to remove. */}
+      <p
+        className={`text-center text-[13px] mt-3.5 ${light ? "text-white/60" : "text-mauve"}`}
+      >
+        שלחו הודעה, נחזור אליכם תוך יום עסקים
+      </p>
     </div>
   );
 }
