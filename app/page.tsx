@@ -6,13 +6,11 @@ import { ArrowLeft } from "lucide-react";
 import { getPage, getServices, getTestimonials, getTeam } from "@/lib/content";
 import ContactActions from "@/components/ContactActions";
 import ServicePath from "@/components/ServicePath";
-import TestimonialCard from "@/components/TestimonialCard";
+import TestimonialFilmstrip from "@/components/TestimonialFilmstrip";
 import FAQAccordion from "@/components/FAQAccordion";
 import ScrollReveal from "@/components/ScrollReveal";
-import Spotlight from "@/components/Spotlight";
 import Parallax from "@/components/Parallax";
 import Tilt from "@/components/Tilt";
-import DragScroll from "@/components/DragScroll";
 import type { FAQ } from "@/lib/types";
 
 // One continuous story: the page descends into night and climbs to sunrise.
@@ -127,7 +125,7 @@ export default async function HomePage() {
           >
             ?
           </span>
-          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-36">
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
             <div className="grid lg:grid-cols-[1fr_1.5fr] gap-10 lg:gap-24 items-start">
               <ScrollReveal className="lg:sticky lg:top-28">
                 <p className="eyebrow eyebrow-light">
@@ -153,44 +151,19 @@ export default async function HomePage() {
 
       {/* ═══ 05:30 — אור ראשון. Voices from the road, on film. ═══ */}
       {testimonials.length > 0 && (
-        <section className="scene-copper grain relative overflow-hidden py-24 sm:py-32">
+        <section className="scene-copper grain relative overflow-hidden py-14 sm:py-20">
           <div className="relative z-10">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <ScrollReveal className="flex flex-wrap items-end justify-between gap-6 mb-12">
-                <div>
-                  <p className="eyebrow !text-white/90 before:!bg-white/90">
-                    המלצות
-                  </p>
-                  <h2 className="text-4xl sm:text-6xl text-white leading-[1.1]">
-                    {fm.proofTitle ?? "משפחות מספרות"}
-                  </h2>
-                </div>
-              </ScrollReveal>
-            </div>
-            {/* Filmstrip — horizontal snap scroll, bleeding off-screen, drag with mouse or touch */}
-            <DragScroll className="overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              <div className="flex gap-5 px-4 sm:px-6 lg:px-[max(2rem,calc((100vw-72rem)/2+2rem))] pb-4 w-max">
-                {testimonials.map((t) => (
-                  <div
-                    key={t.slug}
-                    className="snap-start w-[320px] sm:w-[380px] flex-shrink-0"
-                  >
-                    <Tilt className="h-full">
-                      <Spotlight className="rounded-[18px] h-full">
-                        <TestimonialCard testimonial={t} variant="dark" />
-                      </Spotlight>
-                    </Tilt>
-                  </div>
-                ))}
-              </div>
-            </DragScroll>
+            <TestimonialFilmstrip
+              testimonials={testimonials}
+              title={fm.proofTitle ?? "משפחות מספרות"}
+            />
           </div>
         </section>
       )}
 
       {/* ═══ 06:00 — שחר. The people waiting on the other side. ═══ */}
       {team.length > 0 && (
-        <section className="scene-dawn relative overflow-hidden py-24 sm:py-32">
+        <section className="scene-dawn relative overflow-hidden py-14 sm:py-20">
           <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal className="text-center mb-14">
               <p className="eyebrow !text-white before:!bg-white justify-center">
@@ -262,7 +235,7 @@ export default async function HomePage() {
 
       {/* ═══ 07:00 — בוקר. Questions, in full daylight. ═══ */}
       {faqs.length > 0 && (
-        <section className="scene-day py-24 sm:py-28">
+        <section className="scene-day py-14 sm:py-20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal className="max-w-prose mx-auto">
               <p className="eyebrow">שאלות נפוצות</p>
