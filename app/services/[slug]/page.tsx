@@ -6,10 +6,8 @@ import { ChevronLeft, Check } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getServices, getServiceBySlug } from "@/lib/content";
-import { whatsappLink, serviceMessage } from "@/lib/whatsapp";
 import { serviceLd, faqLd, breadcrumbLd } from "@/lib/seo";
-import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ContactAssurance from "@/components/ContactAssurance";
+import ContactActions from "@/components/ContactActions";
 import ServiceIcon from "@/components/ServiceIcon";
 import FAQAccordion from "@/components/FAQAccordion";
 
@@ -81,11 +79,6 @@ export default async function ServicePage({ params }: PageProps) {
   const { content: body } = await compileMDX({
     source: service.content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
-  });
-
-  const wa = whatsappLink({
-    service: service.routingKey,
-    message: serviceMessage(service.routingKey, service.title),
   });
 
   const jsonLd = serviceLd(service);
@@ -187,10 +180,12 @@ export default async function ServicePage({ params }: PageProps) {
               שלחו לנו הודעה בוואטסאפ, נחזור אליכם עם כל מה שצריך לדעת, בלי
               התחייבות.
             </p>
-            <div className="flex justify-center">
-              <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" service={service.routingKey} />
-            </div>
-            <ContactAssurance tone="light" className="mt-6" />
+            <ContactActions
+              tone="light"
+              service={service.routingKey}
+              serviceTitle={service.title}
+              className="max-w-2xl mx-auto"
+            />
           </div>
         </section>
       </div>

@@ -7,10 +7,8 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getTeam, getTeamMemberBySlug } from "@/lib/content";
 import { COACHES, SITE } from "@/lib/site";
-import { whatsappLink } from "@/lib/whatsapp";
 import { personLd, breadcrumbLd } from "@/lib/seo";
-import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ContactAssurance from "@/components/ContactAssurance";
+import ContactActions from "@/components/ContactActions";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -42,9 +40,6 @@ export default async function TeamPage({ params }: PageProps) {
   });
 
   const coach = COACHES[member.coachKey];
-  const wa = whatsappLink({
-    message: `היי, אשמח לפרטים על הליווי של ${member.name.split(" ")[0]}`,
-  });
 
   // The other coach — cross-linked at the bottom of the bio.
   const other = getTeam().find((m) => m.slug !== slug);
@@ -153,32 +148,33 @@ export default async function TeamPage({ params }: PageProps) {
         <p className="text-ink font-semibold mb-5">
           רוצים לשמוע עוד על הליווי של {member.name.split(" ")[0]}?
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
-          {member.slug === "sivan" && (
-            <>
-              <a
-                href={SITE.spotifyShowUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline"
-              >
-                <Podcast className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-                הפודקאסט שלי בספוטיפיי
-              </a>
-              <a
-                href={SITE.instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline"
-              >
-                <Instagram className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-                אינסטגרם
-              </a>
-            </>
-          )}
-        </div>
-        <ContactAssurance className="mt-6" />
+        <ContactActions
+          tone="dark"
+          waMessage={`היי, אשמח לפרטים על הליווי של ${member.name.split(" ")[0]}`}
+          className="max-w-2xl mx-auto"
+        />
+        {member.slug === "sivan" && (
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
+            <a
+              href={SITE.spotifyShowUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline"
+            >
+              <Podcast className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              הפודקאסט שלי בספוטיפיי
+            </a>
+            <a
+              href={SITE.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline"
+            >
+              <Instagram className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+              אינסטגרם
+            </a>
+          </div>
+        )}
       </div>
       </div>
     </article>

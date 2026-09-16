@@ -2,19 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft, Phone } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { getPage, getServices, getTestimonials, getTeam } from "@/lib/content";
-import { whatsappLink } from "@/lib/whatsapp";
-import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ContactAssurance from "@/components/ContactAssurance";
-import TrackedPhoneLink from "@/components/TrackedPhoneLink";
+import ContactActions from "@/components/ContactActions";
 import ServicePath from "@/components/ServicePath";
 import TestimonialCard from "@/components/TestimonialCard";
 import FAQAccordion from "@/components/FAQAccordion";
 import ScrollReveal from "@/components/ScrollReveal";
 import Spotlight from "@/components/Spotlight";
 import Parallax from "@/components/Parallax";
-import Magnetic from "@/components/Magnetic";
 import Tilt from "@/components/Tilt";
 import DragScroll from "@/components/DragScroll";
 import type { FAQ } from "@/lib/types";
@@ -36,7 +32,6 @@ export default async function HomePage() {
       })
     : { content: null };
 
-  const wa = whatsappLink();
   const headline = fm.heroHeadline ?? "מכיבוי שריפות, לסיסטם שמנהל את החיים";
   const headlineWords = headline.split(" ");
 
@@ -114,24 +109,10 @@ export default async function HomePage() {
             ))}
           </p>
           <div
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 hero-word"
+            className="w-full max-w-md sm:max-w-2xl hero-word"
             style={{ animationDelay: `${680 + headlineWords.length * 90}ms` }}
           >
-            <Magnetic>
-              <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
-            </Magnetic>
-            <Magnetic strength={0.18}>
-              <TrackedPhoneLink location="hero" className="btn-outline-light">
-                <Phone className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-                התקשרו עכשיו
-              </TrackedPhoneLink>
-            </Magnetic>
-            <Magnetic strength={0.18}>
-              <Link href="/services" className="btn-outline-light">
-                לשירותים שלנו
-                <ArrowLeft className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
-              </Link>
-            </Magnetic>
+            <ContactActions tone="light" />
           </div>
           </div>
         </div>
@@ -324,12 +305,7 @@ export default async function HomePage() {
               שיחה קצרה, בלי התחייבות. נבין מה מטריד אתכם ונראה יחד איך אפשר
               לעזור.
             </p>
-            <div className="flex justify-center">
-              <Magnetic>
-                <WhatsAppCTA href={wa} label="דברו איתנו בוואטסאפ" />
-              </Magnetic>
-            </div>
-            <ContactAssurance className="mt-6" />
+            <ContactActions tone="dark" className="max-w-2xl mx-auto" />
           </ScrollReveal>
         </div>
       </section>

@@ -5,11 +5,9 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft } from "lucide-react";
 import { getPage, getTeam } from "@/lib/content";
-import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ContactAssurance from "@/components/ContactAssurance";
+import ContactActions from "@/components/ContactActions";
 import ScrollReveal from "@/components/ScrollReveal";
 import Tilt from "@/components/Tilt";
-import { whatsappLink } from "@/lib/whatsapp";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = getPage("our-story");
@@ -44,10 +42,7 @@ export default async function OurStoryPage() {
       </header>
       <article className="max-w-prose mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
         <div className="prose-rtl">{content}</div>
-        <div className="mt-12">
-          <WhatsAppCTA href={whatsappLink()} label="דברו איתנו בוואטסאפ" />
-          <ContactAssurance align="start" className="mt-5" />
-        </div>
+        <ContactActions tone="dark" className="mt-12 max-w-2xl" />
       </article>
 
       {/* מי אנחנו — same treatment as the homepage team section */}

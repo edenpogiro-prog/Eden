@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { getTestimonials } from "@/lib/content";
 import TestimonialCard from "@/components/TestimonialCard";
-import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ContactAssurance from "@/components/ContactAssurance";
-import { whatsappLink } from "@/lib/whatsapp";
+import ContactActions from "@/components/ContactActions";
 
 export const metadata: Metadata = {
   title: "המלצות",
@@ -39,10 +37,7 @@ export default function TestimonialsPage() {
         <p className="text-center text-mauve">המלצות יתווספו בקרוב.</p>
       )}
 
-      <div className="text-center mt-14">
-        <WhatsAppCTA href={whatsappLink()} label="רוצים להיות הסיפור הבא? דברו איתנו" />
-        <ContactAssurance className="mt-6" />
-      </div>
+      <ContactActions tone="dark" className="max-w-2xl mx-auto mt-14" />
     </div>
     </>
   );

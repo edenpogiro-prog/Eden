@@ -6,11 +6,8 @@ import { CalendarDays, ChevronLeft, Clock3, UserRound } from "lucide-react";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { getBlogPosts, getBlogPostBySlug } from "@/lib/content";
-import { whatsappLink } from "@/lib/whatsapp";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
-import WhatsAppCTA from "@/components/WhatsAppCTA";
-import ContactAssurance from "@/components/ContactAssurance";
-import Magnetic from "@/components/Magnetic";
+import ContactActions from "@/components/ContactActions";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -145,12 +142,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               שיחה קצרה בוואטסאפ, בלי התחייבות, נראה יחד מאיפה הכי נכון
               להתחיל.
             </p>
-            <div className="flex justify-center">
-              <Magnetic>
-                <WhatsAppCTA href={whatsappLink()} label="דברו איתנו בוואטסאפ" />
-              </Magnetic>
-            </div>
-            <ContactAssurance tone="light" className="mt-6" />
+            <ContactActions tone="light" className="max-w-2xl mx-auto" />
           </div>
         </div>
 
