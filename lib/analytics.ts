@@ -6,10 +6,30 @@ import { ANALYTICS } from "@/lib/site";
 
 type Props = Record<string, string | number | boolean>;
 
-/** The gtag.js function, once the tag in app/layout.tsx has loaded. */
+/**
+ * A way to report a gtag event.
+ *
+ * Prefers window.gtag, but falls back to pushing onto dataLayer directly,
+ * because gtag() is only ever a dataLayer push. The inline tag in
+ * app/layout.tsx declares gtag() for its own use; whether that declaration
+ * also lands on window depends on how the script element ends up being
+ * evaluated, and an event silently dropped because a global was missing is
+ * exactly the kind of failure that looks like "the tracking doesn't work".
+ */
 function getGtag(): ((...args: unknown[]) => void) | undefined {
   if (typeof window === "undefined") return undefined;
-  return (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag;
+  const w = window as unknown as {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  };
+  if (typeof w.gtag === "function") return w.gtag;
+  if (Array.isArray(w.dataLayer)) {
+    const layer = w.dataLayer;
+    return (...args: unknown[]) => {
+      layer.push(args);
+    };
+  }
+  return undefined;
 }
 
 export function track(event: string, props?: Props): void {

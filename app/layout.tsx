@@ -86,6 +86,7 @@ export default function RootLayout({
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            window.gtag = window.gtag || gtag;
             gtag('js', new Date());
             gtag('config', 'AW-18418042944');
             ${ANALYTICS.ga4Id ? `gtag('config', '${ANALYTICS.ga4Id}');` : ""}
