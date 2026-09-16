@@ -30,9 +30,19 @@ export function organizationLd() {
       addressLocality: "ראשון לציון",
       addressCountry: "IL",
     },
-    // Both stay out of the payload until confirmed against the Business
-    // Profile — see BUSINESS in lib/site.ts.
-    ...(BUSINESS.openingHours ? { openingHours: BUSINESS.openingHours } : {}),
+    // "Open at the time of search" entered Google's top five local ranking
+    // factors in 2026. These must stay identical to the Business Profile —
+    // see BUSINESS in lib/site.ts.
+    ...(BUSINESS.openingHours
+      ? {
+          openingHoursSpecification: BUSINESS.openingHours.map((h) => ({
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: h.days,
+            opens: h.opens,
+            closes: h.closes,
+          })),
+        }
+      : {}),
     ...(BUSINESS.geo
       ? { geo: { "@type": "GeoCoordinates", ...BUSINESS.geo } }
       : {}),

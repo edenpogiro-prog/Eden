@@ -1,16 +1,27 @@
 // Central site configuration — brand, contact, nav, coaches.
 // Edit here to change global facts in one place.
 
+/**
+ * The site's public base URL, always without the `www.` host.
+ *
+ * mitriafamily.co.il serves the site; www.mitriafamily.co.il 307-redirects to
+ * it. NEXT_PUBLIC_SITE_URL in the Vercel project settings still names the www
+ * host, and that value would otherwise land in every canonical tag, sitemap
+ * <loc>, JSON-LD url and og:url — pointing Google at a hostname the server
+ * redirects away from, via a *temporary* redirect at that. Normalising here
+ * rather than in the dashboard keeps the deployed site correct no matter what
+ * the variable is set to.
+ */
+function canonicalBase(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mitriafamily.co.il";
+  const noWww = raw.replace("://www.", "://");
+  return noWww.endsWith("/") ? noWww.slice(0, -1) : noWww;
+}
+
 export const SITE = {
   name: "המטרייה המשפחתית",
   tagline: "כל המשפחה. תחת מטרייה אחת.",
-  // Non-www, because that is the host that actually serves the site: the
-  // www. hostname 307-redirects here. Declaring www as canonical while the
-  // server redirects away from it told Google the opposite of the truth on
-  // every canonical tag, sitemap <loc>, JSON-LD url and og:url.
-  // NOTE: if NEXT_PUBLIC_SITE_URL is set in the Vercel project settings it
-  // overrides this — it has to say non-www there too.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://mitriafamily.co.il",
+  url: canonicalBase(),
   locale: "he_IL",
   email: "sivaneden@mitriafamily.co.il",
   spotifyShowUrl:
@@ -60,10 +71,21 @@ export const COACH_PROFILES: Record<CoachKey, string[]> = {
 // profile depends on. "Open at the time of search" entered Google's top five
 // local ranking factors in 2026, so these are worth filling in properly.
 export const BUSINESS: {
-  openingHours: string[] | null; // e.g. ["Su-Th 09:00-20:00"]
+  openingHours: { days: string[]; opens: string; closes: string }[] | null;
   geo: { latitude: number; longitude: number } | null;
 } = {
-  openingHours: null,
+  // Confirmed by Eden, 2026-09-16. Saturday is simply absent, which reads as
+  // closed — the normal convention, and correct here.
+  openingHours: [
+    {
+      days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "09:00",
+      closes: "20:00",
+    },
+    { days: ["Friday"], opens: "09:00", closes: "13:00" },
+  ],
+  // Still unset. Low value while the Business Profile carries the real pin,
+  // which is what Google actually geocodes against.
   geo: null,
 };
 
