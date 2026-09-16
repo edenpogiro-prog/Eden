@@ -105,7 +105,7 @@ export const BUSINESS: {
  */
 export const ANALYTICS = {
   ga4Id: "G-JL0HHC5R7E",
-  gscVerification: "",
+  gscVerification: "sWgTt95yYngK4jaQoz4_cN1pgddRcJrpV5czTejklIA",
 };
 
 export const NAV = [
