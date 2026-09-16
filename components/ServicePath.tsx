@@ -20,7 +20,7 @@ const SERVICE_PHOTOS: Record<string, string> = {
   "combo-couples": "/images/services/combo-couples.jpg",
   "digital-courses": "/images/services/digital-courses.jpg",
   "personal-development": "/images/services/personal-development.jpg",
-  workshops: "/images/brochure-cta.jpg",
+  workshops: "/images/services/workshops.jpg",
   "future-leaders": "/images/services/future-leaders.jpg",
 };
 
@@ -40,15 +40,14 @@ export default function ServicePath({
 
   function selectService(i: number) {
     setActiveIndex(i);
-    // On narrow screens the stage sits below the list, off-screen once picked —
-    // bring it into view. "nearest" is a no-op on desktop, where it's already
-    // visible beside the list.
-    stageRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    // Align the top of the photo to the top of the screen every time a
+    // service is picked, so the result always starts from the same place.
+    stageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   return (
     <section
-      className="scene-journey grain relative py-24 sm:py-32"
+      className="scene-journey grain relative py-14 sm:py-20"
       aria-labelledby="service-path-title"
     >
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -112,7 +111,7 @@ export default function ServicePath({
               ref={stageRef}
               className="rounded-[20px] overflow-hidden glass-warm !rounded-[20px] scroll-mt-24"
             >
-              <div className="relative h-56 sm:h-72">
+              <div className="relative aspect-[16/9]">
                 <Image
                   key={active.slug}
                   src={activePhoto}
