@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import AccessibilityWidget from "@/components/AccessibilityWidget";
-import { SITE } from "@/lib/site";
+import { ANALYTICS, SITE } from "@/lib/site";
 import { organizationLd } from "@/lib/seo";
 
 const heebo = Heebo({
@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: { card: "summary_large_image" },
+  ...(ANALYTICS.gscVerification
+    ? { verification: { google: ANALYTICS.gscVerification } }
+    : {}),
 };
 
 const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
@@ -85,6 +88,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-18418042944');
+            ${ANALYTICS.ga4Id ? `gtag('config', '${ANALYTICS.ga4Id}');` : ""}
           `}
         </Script>
       </head>

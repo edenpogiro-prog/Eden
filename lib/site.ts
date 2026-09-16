@@ -89,6 +89,25 @@ export const BUSINESS: {
   geo: null,
 };
 
+/**
+ * Google measurement IDs. Public values — the Ads conversion ID is already
+ * hard-coded in app/layout.tsx, and these live alongside it rather than in
+ * environment variables so there is one file to edit and no dashboard trip.
+ *
+ * Both are empty until the properties exist. Everything that reads them
+ * no-ops while they are blank, so shipping them empty is safe.
+ *
+ *   ga4Id            analytics.google.com -> Admin -> Data streams -> the
+ *                    web stream for mitriafamily.co.il. Looks like G-XXXXXXXXXX.
+ *   gscVerification  search.google.com/search-console -> add a URL-prefix
+ *                    property -> "HTML tag" -> the content="..." value only,
+ *                    not the whole tag.
+ */
+export const ANALYTICS = {
+  ga4Id: "",
+  gscVerification: "",
+};
+
 export const NAV = [
   { href: "/", label: "בית" },
   { href: "/services", label: "שירותים" },
