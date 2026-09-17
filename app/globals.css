@@ -90,7 +90,7 @@
     @apply font-bold text-ink;
   }
 
-  .prose-rtl a {
+  .prose-rtl a:not(.not-prose a) {
     @apply text-ember-600 underline underline-offset-2 hover:text-ember-700;
   }
 
@@ -102,6 +102,11 @@
     @apply border-r-4 border-champagne-400 bg-veil rounded-[12px] pr-5 pl-4 py-4 my-8;
   }
 
+  /* Components embedded in MDX (e.g. the worksheet form) opt out of article
+     typography, which otherwise pads their paragraphs and recolours links. */
+  .prose-rtl .not-prose p {
+    margin-bottom: 0;
+  }
   .prose-rtl blockquote p {
     @apply text-ink font-medium mb-0;
   }

@@ -9,6 +9,7 @@ import { getBlogPosts, getBlogPostBySlug } from "@/lib/content";
 import { COACHES } from "@/lib/site";
 import { articleLd, breadcrumbLd } from "@/lib/seo";
 import ContactActions from "@/components/ContactActions";
+import WorksheetDownload from "@/components/WorksheetDownload";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -49,6 +50,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const { content: body } = await compileMDX({
     source: post.content,
+    components: { WorksheetDownload },
     options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
   });
 

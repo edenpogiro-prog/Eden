@@ -36,21 +36,39 @@ export default function StickyContact() {
     };
   }, []);
 
+  // Stand down while someone is typing into a form field: on a phone the bar
+  // would otherwise sit on top of the field or its submit button, and the
+  // keyboard already takes half the screen.
+  const [typing, setTyping] = useState(false);
+  useEffect(() => {
+    const isField = (t: EventTarget | null) =>
+      t instanceof HTMLElement && t.matches("input:not([type=checkbox]):not([type=hidden]), textarea, select");
+    const onIn = (e: FocusEvent) => { if (isField(e.target)) setTyping(true); };
+    const onOut = (e: FocusEvent) => { if (isField(e.target)) setTyping(false); };
+    document.addEventListener("focusin", onIn);
+    document.addEventListener("focusout", onOut);
+    return () => {
+      document.removeEventListener("focusin", onIn);
+      document.removeEventListener("focusout", onOut);
+    };
+  }, []);
+  const visible = show && !typing;
+
   // Lets the floating accessibility and scroll-to-top buttons lift clear of the
   // bar instead of sitting under it (see .fab-float in globals.css).
   useEffect(() => {
     const el = document.documentElement;
-    if (show) el.setAttribute("data-contact-bar", "true");
+    if (visible) el.setAttribute("data-contact-bar", "true");
     else el.removeAttribute("data-contact-bar");
     return () => el.removeAttribute("data-contact-bar");
-  }, [show]);
+  }, [visible]);
 
   return (
     <div
       className={`md:hidden fixed inset-x-0 bottom-0 z-50 transition-transform duration-300 ease-out motion-reduce:transition-none ${
-        show ? "translate-y-0" : "translate-y-full"
+        visible ? "translate-y-0" : "translate-y-full"
       }`}
-      aria-hidden={!show}
+      aria-hidden={!visible}
     >
       <div className="bg-abyss-950/85 backdrop-blur-xl border-t border-champagne-400/25 shadow-[0_-12px_40px_-24px_rgba(15,10,22,.9)]">
         <div className="px-4 pt-2.5 pb-[max(0.7rem,env(safe-area-inset-bottom))]">
@@ -62,7 +80,7 @@ export default function StickyContact() {
               href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              tabIndex={show ? 0 : -1}
+              tabIndex={visible ? 0 : -1}
               onClick={() => {
                 track("whatsapp_click", { service: "general", location: "sticky-bar" });
                 trackContactConversion();
@@ -74,7 +92,7 @@ export default function StickyContact() {
             </a>
             <a
               href={`tel:${PHONE_TEL}`}
-              tabIndex={show ? 0 : -1}
+              tabIndex={visible ? 0 : -1}
               onClick={() => track("phone_click", { location: "sticky-bar" })}
               aria-label="התקשרו אלינו"
               className="w-[52px] inline-flex items-center justify-center rounded-[12px] border border-white/25 text-white hover:border-champagne-400 active:bg-white/10 transition-colors duration-150"
