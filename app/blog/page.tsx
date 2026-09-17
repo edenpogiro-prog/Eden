@@ -52,6 +52,7 @@ export default function BlogPage() {
                         fill
                         sizes="(max-width: 640px) 100vw, 400px"
                         className="object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.04]"
+                        style={post.coverPosition ? { objectPosition: post.coverPosition } : undefined}
                       />
                     </span>
                   ) : (

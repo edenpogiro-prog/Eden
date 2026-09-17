@@ -68,6 +68,8 @@ export interface BlogPost {
   author: string;
   tags: string[];
   cover?: string; // path under /public
+  /** CSS object-position for the cover's wide crop, e.g. "50% 30%" when faces sit high in a tall photo. */
+  coverPosition?: string;
   readingMinutes: number;
   content: string; // MDX body
 }

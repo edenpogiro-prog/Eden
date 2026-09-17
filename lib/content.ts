@@ -164,6 +164,7 @@ function toBlogPost(slug: string, data: Record<string, unknown>, content: string
     author: (data.author as string) ?? "המטרייה המשפחתית",
     tags: (data.tags as string[]) ?? [],
     cover: data.cover as string | undefined,
+    coverPosition: data.coverPosition as string | undefined,
     readingMinutes: Math.max(1, Math.ceil(words / 200)),
     content,
   };
