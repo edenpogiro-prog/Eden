@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { Loader2, CheckCircle2 } from "lucide-react";
 import { track, trackContactConversion } from "@/lib/analytics";
+import { WEB3FORMS_KEY } from "@/lib/site";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+const ACCESS_KEY = WEB3FORMS_KEY;
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");

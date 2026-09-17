@@ -108,6 +108,16 @@ export const ANALYTICS = {
   gscVerification: "sWgTt95yYngK4jaQoz4_cN1pgddRcJrpV5czTejklIA",
 };
 
+/**
+ * Web3Forms access key, used by the contact form and the worksheet form.
+ * Public by design: it only lets a form send messages *to* the inbox it was
+ * created for, and Web3Forms expects it to ship in client code. It lives here
+ * rather than in a Vercel env var because the env var was never set, and both
+ * forms spent their whole life unable to send — see the commit that added it.
+ */
+export const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "3f508759-f9bd-456f-a849-d1013ed4552d";
+
 export const NAV = [
   { href: "/", label: "בית" },
   { href: "/services", label: "שירותים" },

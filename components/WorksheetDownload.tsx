@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Download, FileText, Loader2 } from "lucide-react";
 import { track } from "@/lib/analytics";
+import { WEB3FORMS_KEY } from "@/lib/site";
 
 // Email-for-worksheet form, used inside blog posts.
 //
@@ -20,7 +21,7 @@ import { track } from "@/lib/analytics";
 // If the send fails, the file is released anyway: the reader did their part,
 // and a broken form shouldn't cost us their trust.
 
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+const ACCESS_KEY = WEB3FORMS_KEY;
 
 type Status = "idle" | "submitting" | "done";
 
