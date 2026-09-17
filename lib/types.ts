@@ -13,6 +13,10 @@ export interface Service {
   metaTitle?: string;
   metaDescription?: string;
   updated?: string; // ISO date of the last real content edit — feeds sitemap lastmod
+  /** false keeps a page out of the home and /services grids while it still gets a route and a sitemap entry. */
+  listed?: boolean;
+  /** Slug of the broader service this page sits under, for breadcrumbs. */
+  parent?: string;
   icon:
     | "heart"
     | "sprout"

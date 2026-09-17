@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Check } from "lucide-react";
-import { getServices } from "@/lib/content";
+import { getListedServices } from "@/lib/content";
 import ServiceIcon from "@/components/ServiceIcon";
 import ScrollReveal from "@/components/ScrollReveal";
 import WhatsAppCTA from "@/components/WhatsAppCTA";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
-  const services = getServices();
+  const services = getListedServices();
   return (
     <>
       {/* Page intro — night band */}

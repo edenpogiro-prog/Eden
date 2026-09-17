@@ -55,6 +55,8 @@ export function getServices(): Service[] {
       metaTitle: data.metaTitle as string | undefined,
       metaDescription: data.metaDescription as string | undefined,
       updated: data.updated as string | undefined,
+      listed: data.listed !== false,
+      parent: data.parent as string | undefined,
       icon: (data.icon as Service["icon"]) ?? "compass",
       routingKey: (data.routingKey as string) ?? "",
       order: (data.order as number) ?? 99,
@@ -64,6 +66,15 @@ export function getServices(): Service[] {
       content,
     })),
   );
+}
+
+/**
+ * Services shown in the home page and /services grids. Focused sub-pages
+ * (e.g. a page built around one search phrase) set `listed: false` so they
+ * reach search without crowding the menu of core offerings.
+ */
+export function getListedServices(): Service[] {
+  return getServices().filter((s) => s.listed !== false);
 }
 
 export function getServiceBySlug(slug: string): Service | null {
@@ -78,6 +89,8 @@ export function getServiceBySlug(slug: string): Service | null {
     metaTitle: data.metaTitle as string | undefined,
     metaDescription: data.metaDescription as string | undefined,
     updated: data.updated as string | undefined,
+    listed: data.listed !== false,
+    parent: data.parent as string | undefined,
     icon: (data.icon as Service["icon"]) ?? "compass",
     routingKey: (data.routingKey as string) ?? "",
     order: (data.order as number) ?? 99,

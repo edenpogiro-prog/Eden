@@ -87,9 +87,11 @@ export default async function ServicePage({ params }: PageProps) {
   const faq = faqLd(service.faqs ?? []);
   // Only the digital-courses page is a Course; every other entry is a Service.
   const course = service.slug === "digital-courses" ? courseLd(service) : null;
+  const parent = service.parent ? getServiceBySlug(service.parent) : null;
   const crumbs = breadcrumbLd([
     { name: "בית", path: "/" },
     { name: "שירותים", path: "/services" },
+    ...(parent ? [{ name: parent.title, path: `/services/${parent.slug}` }] : []),
     { name: service.title, path: `/services/${slug}` },
   ]);
 
@@ -107,11 +109,20 @@ export default async function ServicePage({ params }: PageProps) {
       {/* Hero — night band */}
       <section className="scene-night starfield horizon grain relative overflow-hidden">
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14">
-          <nav className="flex items-center gap-1 text-white/60 text-sm mb-8">
+          {/* A four-level trail doesn't fit a phone; let it wrap between crumbs
+              rather than mid-phrase. Scoped to sub-pages so the campaign's
+              landing pages render exactly as before. */}
+          <nav className={`flex items-center gap-1 text-white/60 text-sm mb-8 ${parent ? "flex-wrap gap-y-1.5 [&>*]:whitespace-nowrap" : ""}`}>
             <Link href="/" className="hover:text-white transition-colors duration-150">בית</Link>
             <ChevronLeft className="w-4 h-4 rtl:rotate-180" strokeWidth={1.5} />
             <Link href="/services" className="hover:text-white transition-colors duration-150">שירותים</Link>
             <ChevronLeft className="w-4 h-4 rtl:rotate-180" strokeWidth={1.5} />
+            {parent && (
+              <>
+                <Link href={`/services/${parent.slug}`} className="hover:text-white transition-colors duration-150">{parent.title}</Link>
+                <ChevronLeft className="w-4 h-4 rtl:rotate-180" strokeWidth={1.5} />
+              </>
+            )}
             <span className="text-white font-semibold">{service.title}</span>
           </nav>
           <span className="w-16 h-16 rounded-[10px] border border-white/15 bg-white/[.06] flex items-center justify-center mb-6">

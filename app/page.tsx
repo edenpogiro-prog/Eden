@@ -3,7 +3,7 @@ import Image from "next/image";
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft } from "lucide-react";
-import { getPage, getServices, getTestimonials, getTeam } from "@/lib/content";
+import { getPage, getListedServices, getTestimonials, getTeam } from "@/lib/content";
 import ContactActions from "@/components/ContactActions";
 import ServicePath from "@/components/ServicePath";
 import TestimonialFilmstrip from "@/components/TestimonialFilmstrip";
@@ -17,7 +17,7 @@ import type { FAQ } from "@/lib/types";
 // Scene backgrounds chain into each other — no visible section borders.
 export default async function HomePage() {
   const home = getPage("home");
-  const services = getServices();
+  const services = getListedServices();
   const testimonials = getTestimonials();
   const team = getTeam();
   const fm = (home?.data ?? {}) as Record<string, string>;
