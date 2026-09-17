@@ -64,6 +64,7 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string; // ISO date
+  updated?: string; // ISO date of a material content revision, if any
   author: string;
   tags: string[];
   cover?: string; // path under /public

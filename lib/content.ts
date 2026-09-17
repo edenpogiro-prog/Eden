@@ -160,6 +160,7 @@ function toBlogPost(slug: string, data: Record<string, unknown>, content: string
     title: (data.title as string) ?? slug,
     description: (data.description as string) ?? "",
     date: (data.date as string) ?? "1970-01-01",
+    updated: data.updated as string | undefined,
     author: (data.author as string) ?? "המטרייה המשפחתית",
     tags: (data.tags as string[]) ?? [],
     cover: data.cover as string | undefined,

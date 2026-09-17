@@ -122,6 +122,7 @@ export function articleLd(post: BlogPost) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    dateModified: post.updated ?? post.date,
     inLanguage: "he",
     // Linking the author to their /team page connects the post to a Person
     // entity that carries the credentials — the E-E-A-T signal Google looks
