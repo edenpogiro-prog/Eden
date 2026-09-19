@@ -1,4 +1,4 @@
-import { BUSINESS, COACHES, COACH_PROFILES, SITE } from "@/lib/site";
+import { BUSINESS, COACHES, COACH_PROFILES, SERVICE_AREA, SITE } from "@/lib/site";
 import type { BlogPost, FAQ, Service, TeamMember } from "@/lib/types";
 
 /** The team page for a coach, matched by the display name used in frontmatter. */
@@ -20,7 +20,10 @@ export function organizationLd() {
     email: SITE.email,
     // NAP: phone must stay identical to the Google Business Profile listing.
     telephone: "+972-52-855-9050",
-    areaServed: "IL",
+    areaServed: [
+      ...SERVICE_AREA.map((name) => ({ "@type": "City", name })),
+      { "@type": "Country", name: "ישראל" },
+    ],
     sameAs: [SITE.instagramUrl, SITE.spotifyShowUrl],
     // Street name only, no house number — deliberate, and kept identical to the
     // Google Business Profile listing so the two records match.
@@ -63,7 +66,10 @@ export function serviceLd(service: Service) {
     description: service.tagline || service.metaDescription,
     serviceType: service.title,
     provider: { "@type": "ProfessionalService", name: SITE.name, url: SITE.url },
-    areaServed: "IL",
+    areaServed: [
+      ...SERVICE_AREA.map((name) => ({ "@type": "City", name })),
+      { "@type": "Country", name: "ישראל" },
+    ],
     url: `${SITE.url}/services/${service.slug}`,
   };
 }

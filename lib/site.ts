@@ -70,6 +70,21 @@ export const COACH_PROFILES: Record<CoachKey, string[]> = {
 // here would show wrong hours to searchers and break the very consistency the
 // profile depends on. "Open at the time of search" entered Google's top five
 // local ranking factors in 2026, so these are worth filling in properly.
+/**
+ * Where the coaching actually happens, for `areaServed` in the schema.
+ * "IL" alone told Google only that the business is national, which is no help
+ * for a local search like "ייעוץ כלכלי בראשון לציון". Keep this list identical
+ * to the service area on the Google Business Profile.
+ */
+export const SERVICE_AREA = [
+  "ראשון לציון",
+  "נס ציונה",
+  "רחובות",
+  "חולון",
+  "בת ים",
+  "אזור המרכז",
+];
+
 export const BUSINESS: {
   openingHours: { days: string[]; opens: string; closes: string }[] | null;
   geo: { latitude: number; longitude: number } | null;
